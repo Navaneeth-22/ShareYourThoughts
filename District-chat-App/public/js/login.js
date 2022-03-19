@@ -1,57 +1,34 @@
-//const axios = require("axios";
+$(document).ready(function () {
+  $("#submitBut").click(() => {
+    console.log("hello");
+    const aadharNo = $("#aadharNoId").val();
+    const password = $("#passwordId").val();
+    console.log("jkjkg" + aadharNo + password);
+    if (!aadharNo || !password) {
+      alert("aadhar and password required");
+      return;
+    }
 
-const loginUser = async () => {
-  console.log("hello");
-  const aadharNo = document.getElementById("aadharNoId").value;
-  const password = document.getElementById("passwordId").value;
-  console.log("jkjkg" + aadharNo + password);
-
-  if (!aadharNo || !password) {
-    return new Error("hgkkg");
-  }
-
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ aadharNo: aadharNo, password: password }),
-  };
-  fetch("http://localhost:3000/api/user/login", requestOptions)
-    .then((response) => response.json())
-    .then((data) => localStorage.setItem("user-info", JSON.stringify(data)))
-    .catch((error) => {
-      console.log(error);
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:3000/api/user/login",
+      data: JSON.stringify({
+        aadharNo: aadharNo,
+        password: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      success: function (data) {
+        //localStorage.token = data.token;
+        alert("Got a token from the server! Token: " + data);
+      },
+      error: function (data) {
+        alert("Login Failed" + data.message);
+      },
     });
-
-  // if (userdata) console.log(userdata);
-  //jquery
-  /*const district = data.district;
-
-  const config2 = {
-    method: "PUT",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${data.jwtToken}`,
-    },
-    body: JSON.stringify({ data }),
-  };
-  a;
-
-  fetch("http://localhost:5005/addUser", config2)
-    .then((response) => response.json())
-    .then((data) => localStorage.setItem("chat-data", JSON.stringify(data)));
-    */
-  /* let t = 0;
-
-  while (t != 100000000) {
-    t++;
-  }*/
-};
-
-const caller = async () => {
-  await loginUser();
-};
+  });
+});
 
 function getCookie(cname) {
   let name = cname + "=";
@@ -75,11 +52,28 @@ const home = async () => {
   element.innerText = JSON.stringify(sessionId);
   console.log("klk" + JSON.stringify(sessionId));
   const config2 = {
+    method: "GET",
     headers: {
       "content-type": "application/json",
       authorization: `Bearer ${sessionId}`,
     },
   };
 
-  fetch("http://localhost:3000/Home", config2);
+  $.ajax({
+    type: "PUT",
+    url: "http://localhost:3000/addUser",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${sessionId}`,
+    },
+    success: function (data) {
+      //localStorage.token = data.token;
+
+      // window.location.replace("http://localhost:3000/Home");
+      alert("user added " + sessionId);
+    },
+    error: function (data) {
+      alert("there was an error in adding user");
+    },
+  });
 };

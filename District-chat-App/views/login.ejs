@@ -6,17 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <script src="https://cdn.socket.io/4.4.1/socket.io.js"></script>
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
+
   <body>
-    <form onsubmit="caller()">
+    <form method="post" onsubmit="event.preventDefault()">
       <input type="text" id="aadharNoId" />
       <input type="password" id="passwordId" />
-      <input type="submit" value="Login" />
+      <input id="submitBut" type="submit" value="Login" />
     </form>
     <p id="parag"></p>
-    <p><%= (typeof error != "undefined" ? error?.message : "") %></p>
-    <a href="/Home">HOme</a>
-    <button id="homeButton" onclick="home()">go to home</button>
+    <p><%= (typeof message != "undefined" ? "hello "+message : "") %></p>
+    <p><%= (typeof name != "undefined" ? name : "") %></p>
+    <a href="http://localhost:3000/Home">HOme</a>
+    <button id="homeButton" onclick="home()">addUser</button>
     <script src="/js/clientsocket.js"></script>
     <script src="/js/login.js"></script>
   </body>

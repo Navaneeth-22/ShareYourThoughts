@@ -1,15 +1,15 @@
 const express = require("express");
-const app = express();
 const router = express.Router();
 
-const path = require("path");
-
 const authUser = require("../controllers/loginController.js");
-
-__dirname = path.resolve();
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-
+router.get("/", (req, res) => {
+  res.status(200).render("login");
+});
 router.post("/", authUser);
+router.get("/user/:name", (req, res) => {
+  let name = req.params.name;
+  console.log("name is" + name);
+  res.render("home", { name: name });
+});
 
 module.exports = router;

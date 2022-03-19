@@ -3,12 +3,10 @@ const bcrypt = require("bcryptjs");
 const expressAsyncHandler = require("express-async-handler");
 const tokenGenerator = require("../config/tokenGenerator.js");
 
-const authUser = expressAsyncHandler(async (req, res, next) => {
+const authUser = async (req, res, next) => {
   const { aadharNo, password } = req.body;
-  /*if (!aadharNo || !password) {
-    res.status(401);
-    throw new Error("please provide fields!!");
-  }*/
+
+  console.log("aadhar" + req.body.aadharNo, req.body.password);
   const user = await User.findOne({ aadharNo }).exec();
   if (user) {
     const verified = await bcrypt.compare(password, user.password);
@@ -33,27 +31,19 @@ const authUser = expressAsyncHandler(async (req, res, next) => {
         secure: true,
       });
 
-      /* res.status(200).json({
-        id: user._id,
-        Name: user.Name,
-        userName: user.userName,
-        email: user.email,
-        aadharNo: user.aadharNo,
-        dateOfBirth: user.dateOfBirth,
-        occupation: user.occupation,
-        photo: user.photo,
-        district: user.district,
-        state: user.state,
-        jwtToken: await tokenGenerator(user._id, user.aadharNo),
-      });*/
+      // res.redirect(`/user/${userinfo.Name}`);
       return res.json({ success: true });
     } else {
-      res
-        .status(200)
-        .render("login", (data = { message: "wrong credwentials" }));
+      res.status(401).json({ message: "Wrong user or password" });
+      console.log("failed login");
+      return;
     }
     // res.status(200).render("login", (data = { ...userinfo }));
+  } else {
+    res.status(401).json({ message: "Wrong user or password" });
+    console.log("failed login");
+    return;
   }
-});
+};
 
 module.exports = authUser;
