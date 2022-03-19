@@ -61,59 +61,7 @@ app.get("/rest", protect, (req, res) => {
   res.status(200).send("api  is running");
   next();
 });
-/*app.get("/chatId/", protect, async (req, res) => {
-  const district = req.user.district;
-  const occupation = req.user.occupation;
-  if (occupation == "user") {
-    const chat = await Chat.find({ chatRoomName: district + " Main" });
-    const chatId = chat._id;
-    const added = await Chat.findByIdAndUpdate(
-      chatId,
-      { $push: { users: req.user } },
-      { new: true }
-    );
-    if (!added) {
-      res.status(404);
 
-      res.render("erorr", "chat was not found");
-    }
-  }
-  if (occupation == "MLA") {
-    const chat = await Chat.find({ district: district });
-    chat.forEach(async (x) => {
-      const chatId = x._id;
-      const added = await Chat.findByIdAndUpdate(
-        chatId,
-        {
-          $push: { users: req.user },
-
-          $push: { districtAdmins: req.user },
-        },
-        { new: true }
-      );
-
-      if (!added) {
-        res.status(404);
-
-        res.render("erorr", "chat was not found");
-      }
-    });
-  }
-  if (occupation == "") {
-    const { chat } = await Chat.find({ chatRoomName: district + " Main" });
-    const chatId = chat._id;
-    const added = await Chat.findByIdAndUpdate(
-      chatId,
-      { $push: { users: req.user } },
-      { new: true }
-    );
-    if (!added) {
-      res.status(404);
-
-      res.render("erorr", "chat was not found");
-    }
-  }
-});*/
 app.get("/error/", protect, (req, res) => {
   console.log(req.error);
   res.render("error", { message: req.error });
