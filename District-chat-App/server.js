@@ -67,14 +67,8 @@ app.get("/error/", protect, (req, res) => {
   res.render("error", { message: req.error });
   next();
 });
-/*app.get("/", protect, (req, res, next) => {
-  console.log("home" + req.error);
-  req.User = req.user;
-  res.status(200).redirect("/Home");
-});*/
 
 app.get("/home1", protect, (req, res) => {
-  // app.set("user", req.user);
   if (req.user) {
     let name = req.user.Name;
     console.log("name is " + name);

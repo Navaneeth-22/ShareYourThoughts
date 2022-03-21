@@ -29,6 +29,8 @@ $(window).on("load", function () {
       '<a href="http://localhost:3000/api/user/profile">Profile</a>'
     );
   }
+
+  
 });
 function removeLoader() {
   $("#loadingDiv").fadeOut(500, function () {
