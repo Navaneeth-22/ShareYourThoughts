@@ -30,6 +30,34 @@ $(window).on("load", function () {
       '<li><a href="http://localhost:3000/api/user/profile" class="nav-link dabba">Profile</a></li>'
     );
   }
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:3000/chatrooms",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${sessionId}`,
+    },
+    success: function (data) {
+      //localStorage.token = data.token;
+      data.forEach(function (x) {
+        $(".cards-container").append(
+          `<div class="cards">
+      <div><img src="/images/message.png" alt="" /></div>
+      <div class="heading">${x.chatName}</div>
+      <div class="text">
+        User can make full use of chat rooms and send all the problems
+        to respective organisation.
+      </div>
+    </div>`
+        );
+      });
+      console.log(data);
+    },
+    error: function (data) {
+      alert("Login Failed" + data.message);
+    },
+  });
+
   $("body").show();
 });
 function removeLoader() {

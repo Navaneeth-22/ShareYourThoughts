@@ -5,6 +5,7 @@ const protect = require("./middlewares/authorization.js");
 const createChatRoom = require("./config/createChatRooms.js");
 const Chat = require("./model/chatModel.js");
 const connectDB = require("./config/dbConnect.js");
+const getchatRoute = require("./routes/getchatRoute");
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
@@ -54,9 +55,7 @@ console.log(path.join(__dirname, "/public/"));
 app.use("/api/user/login", loginRoute);
 app.use("/api/user/signup", signupRoute);
 app.use("/addUser", addUserRoute);
-/*app.get("/Login", (req, res) => {
-  res.status(200).render("login");
-});*/
+app.use("/chatrooms", getchatRoute);
 
 app.get("/rest", protect, (req, res) => {
   console.log("error" + req.error);
