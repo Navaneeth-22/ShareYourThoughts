@@ -32,7 +32,8 @@ const authUser = async (req, res, next) => {
       });
 
       // res.redirect(`/user/${userinfo.Name}`);
-      return res.json({ success: true });
+      //  return res.json({ success: true });
+      res.redirect("/Home");
     } else {
       res.status(401).json({ message: "Wrong user or password" });
       console.log("failed login");

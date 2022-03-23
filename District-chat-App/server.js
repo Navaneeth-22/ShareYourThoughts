@@ -28,6 +28,7 @@ app.set("views", path.join(__dirname, "/views"));
 app.use(express.static("public"));
 app.use("/js", express.static(__dirname + "public/js"));
 app.use("/css", express.static(__dirname + "public/css"));
+app.use("/images", express.static(__dirname + "public/images"));
 
 app.use(bodyparser.json());
 
@@ -58,8 +59,10 @@ app.use("/addUser", addUserRoute);
 });*/
 
 app.get("/rest", protect, (req, res) => {
-  res.status(200).send("api  is running");
-  next();
+  console.log("error" + req.error);
+  if (req.error) {
+    res.render("error", { message: req.error });
+  } else res.status(200).send("api  is running");
 });
 
 app.get("/error/", protect, (req, res) => {

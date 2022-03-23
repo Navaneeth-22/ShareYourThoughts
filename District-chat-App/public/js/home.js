@@ -13,24 +13,24 @@ function getCookie(cname) {
   return "";
 }
 $(window).on("load", function () {
-  $(".mainPage").hide();
-  setTimeout(removeLoader, 5000);
+  //  $(".mainPage").hide();
+  //  setTimeout(removeLoader, 5000);
   let sessionId = getCookie("SESSIONID");
+
   console.log(sessionId);
   if (!sessionId) {
-    $(".navBar").append(
-      '<a href="http://localhost:3000/api/user/login">Login</a>'
+    $(".upward-trans").append(
+      '<li><a href="http://localhost:3000/api/user/login" class="nav-link dabba">Login</a></li>'
     );
-    $(".navBar").append(
-      '<a href="http://localhost:3000/api/user/signup">signup</a>'
+    $(".upward-trans").append(
+      '<li><a href="http://localhost:3000/api/user/signup" class="nav-link dabba">signup</a></li>'
     );
   } else {
-    $(".navBar").append(
-      '<a href="http://localhost:3000/api/user/profile">Profile</a>'
+    $(".upward-trans").append(
+      '<li><a href="http://localhost:3000/api/user/profile" class="nav-link dabba">Profile</a></li>'
     );
   }
-
-  
+  $("body").show();
 });
 function removeLoader() {
   $("#loadingDiv").fadeOut(500, function () {

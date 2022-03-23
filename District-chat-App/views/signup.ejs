@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="/css/signup.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Registration</div>
+      <div class="content">
+        <form method="post" onsubmit="event.preventDefault()">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details" id="name">Full Name</span>
+              <input
+                type="text"
+                placeholder="Enter your name"
+                id="nameId"
+                required
+              />
+            </div>
+            <div class="input-box">
+              <span class="details" id="username">Username</span>
+              <input
+                type="text"
+                placeholder="Enter your username"
+                id="usernameId"
+                required
+              />
+            </div>
+            <div class="input-box">
+              <span class="details" id="eamil">Email</span>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                id="emailId"
+                required
+              />
+            </div>
+            <div class="input-box">
+              <span class="details" id="phone">Phone Number</span>
+              <input
+                type="number"
+                placeholder="Enter your number"
+                id="phoneId"
+                required
+              />
+            </div>
+            <div class="input-box">
+              <span class="details" id="password">Password(min length 6)</span>
+              <input
+                type="password"
+                min="6"
+                placeholder="Enter your password"
+                required
+                id="passwordId"
+              />
+            </div>
+            <div class="input-box">
+              <span class="details" id="aadhar">Aadhar</span>
+              <input
+                type="number"
+                placeholder="Enter aadhar"
+                id="aadharId"
+                required
+              />
+            </div>
+
+            <div class="input-box">
+              <span class="details" id="address">Address</span>
+              <input type="text" placeholder="Enter address" required />
+            </div>
+
+            <div class="input-box">
+              <span class="details" id="city">City</span>
+              <input type="text" placeholder="Enter city" required />
+            </div>
+
+            <div class="input-box">
+              <span class="details" id="district">District</span>
+              <input
+                type="text"
+                placeholder="Enter District"
+                id="districtId"
+                required
+              />
+            </div>
+            <div class="input-box">
+              <span class="details" id="state">State</span>
+              <input
+                type="text"
+                placeholder="Enter state"
+                id="stateId"
+                required
+              />
+            </div>
+            <div class="input-box">
+              <span class="occupation" id="occupation">Occupation</span>
+              <select
+                class="form-select form-select-lg mb-3"
+                aria-label=".form-select-lg example"
+                id="occupationId"
+                required
+              >
+                <option value="MLA">MLA</option>
+                <option value="RoadDepartment">Road Dept</option>
+                <option value="WaterResourceDepartment">
+                  WaterResourceDept
+                </option>
+                <option value="ElectricityDepartment">ElectricityDept</option>
+                <option value="user">user</option>
+              </select>
+            </div>
+            <div class="input-box">
+              <span class="photo" id="photo">Photo</span>
+              <input type="image" id="profilePhoto" />
+            </div>
+          </div>
+          <div class="button" id="but">
+            <input id="submitBut" type="submit" value="Register" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="/js/signup.js"></script>
+  </body>
+</html>

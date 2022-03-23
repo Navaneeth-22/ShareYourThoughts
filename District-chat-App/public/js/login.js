@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $("#submitBut").click(() => {
     console.log("hello");
-    const aadharNo = $("#aadharNoId").val();
+    const aadharNo = $("#aadharId").val();
     const password = $("#passwordId").val();
     console.log("jkjkg" + aadharNo + password);
     if (!aadharNo || !password) {
@@ -21,7 +21,8 @@ $(document).ready(function () {
       },
       success: function (data) {
         //localStorage.token = data.token;
-        alert("Got a token from the server! Token: " + data);
+
+        window.location.replace("/Home");
       },
       error: function (data) {
         alert("Login Failed" + data.message);

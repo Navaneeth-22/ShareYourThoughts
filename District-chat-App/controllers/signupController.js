@@ -62,22 +62,28 @@ const signupUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    res
-      .status(201)
-      .json({
-        id: user._id,
-        Name: user.Name,
-        userName: user.userName,
-        email: user.email,
-        aadharNo: user.aadharNo,
-        dateOfBirth: user.dateOfBirth,
-        occupation: user.occupation,
-        photo: user.photo,
-        district: user.district,
-        state: user.state,
-        jwtToken: tokenGenerator(user._id, user.aadharNo),
-      })
-      .render("Home", user);
+    const userinfo = {
+      id: user._id,
+      Name: user.Name,
+      userName: user.userName,
+      email: user.email,
+      aadharNo: user.aadharNo,
+      dateOfBirth: user.dateOfBirth,
+      occupation: user.occupation,
+      photo: user.photo,
+      district: user.district,
+      state: user.state,
+      jwtToken: await tokenGenerator(user._id, user.aadharNo),
+    };
+
+    //  req.io.emit("user-info2", (data2 = { ...userinfo }));
+    res.cookie("SESSIONID", userinfo.jwtToken, {
+      //  httpOnly: true,
+      secure: true,
+    });
+
+    // res.redirect(`/user/${userinfo.Name}`);
+    return res.redirect("/Home");
   } else {
     res.status(400);
     throw new Error("failed to create user");

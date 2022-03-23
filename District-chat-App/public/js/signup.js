@@ -1,5 +1,55 @@
 const { default: axios } = require("axios");
 
+$(document).ready(function () {
+  $("#submitBut").click(() => {
+    console.log("hello");
+    const Name = $("#nameId").val();
+    /*  Name,
+    userName,
+    email,
+    aadharNo,
+    dateOfBirth,
+    occupation,
+    photo,
+    district,
+    state,
+    password,*/
+    const userName = $("#usernameId").val();
+    const email = $("#emailId").val();
+    const aadharNo = $("#aadharId").val();
+    const occupation = $("#occupationId").val();
+    const photo = $("#photoId").val();
+    const district = $("#districtId").val();
+    const state = $("#stateId").val();
+    const password = $("#passwordId").val();
+    console.log("jkjkg" + aadharNo + password);
+    if (!aadharNo || !password) {
+      alert("aadhar and password required");
+      return;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:3000/api/user/login",
+      data: JSON.stringify({
+        aadharNo: aadharNo,
+        password: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      success: function (data) {
+        //localStorage.token = data.token;
+
+        window.location.replace("/Home");
+      },
+      error: function (data) {
+        alert("Login Failed" + data.message);
+      },
+    });
+  });
+});
+
 const loginUser = async () => {
   const Name = document.getElementById("NameId").value;
   const userName = document.getElementById("userNameId").value;
