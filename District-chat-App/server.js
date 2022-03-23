@@ -56,6 +56,7 @@ app.use("/api/user/login", loginRoute);
 app.use("/api/user/signup", signupRoute);
 app.use("/addUser", addUserRoute);
 app.use("/chatrooms", getchatRoute);
+app.use("api/chat/:id", chatRoute);
 
 app.get("/rest", protect, (req, res) => {
   console.log("error" + req.error);
