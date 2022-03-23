@@ -38,7 +38,6 @@ const authUser = async (req, res, next) => {
       console.log("failed login");
       return;
     }
-    // res.status(200).render("login", (data = { ...userinfo }));
   } else {
     res.status(401).json({ message: "Wrong user or password" });
     console.log("failed login");
