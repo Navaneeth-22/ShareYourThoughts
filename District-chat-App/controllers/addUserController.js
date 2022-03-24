@@ -6,80 +6,120 @@ const addUser = async (req, res) => {
   if (!req.error) {
     const user = req.user;
     console.log("user is" + user);
-    if (user.occupation == "user") {
-      const added = Chat.findOneAndUpdate(
-        { chatRoomName: user.district + " Main" },
-        {
-          $push: { users: user._id },
-        },
-        { new: true }
-      )
-        .populate("users", "-password")
-        .exec();
-      if (!added) {
-        res.status(404);
-        // throw new Error("Chat Not Found");
+    const alreadyAdded = await Chat.find({
+      users: { $elemMatch: { $eq: req.user._id } },
+    }).populate("users", "-password");
+    if (!alreadyAdded) {
+      if (user.occupation == "user") {
+        console.log("added" + alreadyAdded);
+
+        const added = Chat.findOneAndUpdate(
+          { chatRoomName: user.district + " Main" },
+          {
+            $push: { users: user._id },
+          },
+          { new: true }
+        )
+          .populate("users", "-password")
+          .exec();
+        if (!added) {
+          res.status(404);
+          // throw new Error("Chat Not Found");
+        } else {
+          console.log("new one is " + added);
+          res.status(200).json({ success: true });
+        }
+      } else if (user.occupation == "MLA") {
+        const added = Chat.findOneAndUpdate(
+          { chatRoomName: user.district + " Main" },
+          {
+            $push: { users: user._id, districtAdmins: user._id },
+          },
+          { new: true }
+        )
+
+          .populate("users", "-password")
+          .populate("districtAdmins", "-password")
+          .exec();
+        const added1 = Chat.findOneAndUpdate(
+          { chatRoomName: user.district + " Road department" },
+          {
+            $push: { users: user._id, districtAdmins: user._id },
+          },
+          { new: true }
+        )
+
+          .populate("users", "-password")
+          .populate("districtAdmins", "-password")
+          .exec();
+        const added2 = Chat.findOneAndUpdate(
+          { chatRoomName: user.district + " Electricity department" },
+          {
+            $push: { users: user._id, districtAdmins: user._id },
+          },
+          { new: true }
+        )
+
+          .populate("users", "-password")
+          .populate("districtAdmins", "-password")
+          .exec();
+        const added3 = Chat.findOneAndUpdate(
+          { chatRoomName: user.district + " Water resource department" },
+          {
+            $push: { users: user._id, districtAdmins: user._id },
+          },
+          { new: true }
+        )
+
+          .populate("users", "-password")
+          .populate("districtAdmins", "-password")
+          .exec();
+        if (!added || !added1 || !added2 || !added3) {
+          res.status(404);
+        } else {
+          const allChats = {
+            added,
+            added1,
+            added2,
+            added3,
+          };
+          console.log(added, added1, added2, added3);
+          res.status(200).json({ success: true });
+        }
       } else {
-        console.log("new one is " + added);
-        res.status(200).json({ success: true });
-      }
-    }
-    if (user.occupation == "MLA") {
-      const added = Chat.findOneAndUpdate(
-        { chatRoomName: user.district + " Main" },
-        {
-          $push: { users: user._id, districtAdmins: user._id },
-        },
-        { new: true }
-      )
+        const added = Chat.findOneAndUpdate(
+          { chatRoomName: user.district + " Main" },
+          {
+            $push: { users: user._id, districtAdmins: user._id },
+          },
+          { new: true }
+        )
 
-        .populate("users", "-password")
-        .populate("districtAdmins", "-password")
-        .exec();
-      const added1 = Chat.findOneAndUpdate(
-        { chatRoomName: user.district + " Road department" },
-        {
-          $push: { users: user._id, districtAdmins: user._id },
-        },
-        { new: true }
-      )
+          .populate("users", "-password")
+          .populate("districtAdmins", "-password")
+          .exec();
+        const added1 = Chat.findOneAndUpdate(
+          { chatRoomName: user.district + " " + user.occuption },
+          {
+            $push: { users: user._id },
+          },
+          { new: true }
+        )
 
-        .populate("users", "-password")
-        .populate("districtAdmins", "-password")
-        .exec();
-      const added2 = Chat.findOneAndUpdate(
-        { chatRoomName: user.district + " Electricity department" },
-        {
-          $push: { users: user._id, districtAdmins: user._id },
-        },
-        { new: true }
-      )
+          .populate("users", "-password")
+          .populate("districtAdmins", "-password")
+          .exec();
 
-        .populate("users", "-password")
-        .populate("districtAdmins", "-password")
-        .exec();
-      const added3 = Chat.findOneAndUpdate(
-        { chatRoomName: user.district + " Water resource department" },
-        {
-          $push: { users: user._id, districtAdmins: user._id },
-        },
-        { new: true }
-      )
-
-        .populate("users", "-password")
-        .populate("districtAdmins", "-password")
-        .exec();
-      if (!added || !added1 || !added2 || !added3) {
-        res.status(404);
-      } else {
-        const allChats = {
-          added,
-          added1,
-          added2,
-          added3,
-        };
-        console.log(added, added1, added2, added3);
-        res.status(200).json({ success: true });
+        if (!added || !added1) {
+          res.status(404);
+        } else {
+          const allChats = {
+            added,
+            added1,
+          };
+          console.log(added, added1);
+          res.status(200).json({ success: true });
+        }
       }
     }
   }

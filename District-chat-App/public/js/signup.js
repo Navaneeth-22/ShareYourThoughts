@@ -69,7 +69,7 @@ $(document).ready(function () {
   });
 });
 /*
-const loginUser = async () => {
+const addUser = async () => {
   const Name = document.getElementById("NameId").value;
   const userName = document.getElementById("userNameId").value;
   const email = document.getElementById("emailId").value;

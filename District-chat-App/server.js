@@ -5,12 +5,13 @@ const protect = require("./middlewares/authorization.js");
 const createChatRoom = require("./config/createChatRooms.js");
 const Chat = require("./model/chatModel.js");
 const connectDB = require("./config/dbConnect.js");
-const getchatRoute = require("./routes/getchatRoute");
-//const chatRoute = require("./routes/chatRoute");
+const getchatRoute = require("./routes/getchatRoute.js");
+const chatRoute = require("./routes/chatRoute");
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const bodyparser = require("body-parser");
+const { request } = require("express");
 
 __dirname = path.resolve();
 
@@ -57,7 +58,11 @@ app.use("/api/user/login", loginRoute);
 app.use("/api/user/signup", signupRoute);
 app.use("/addUser", addUserRoute);
 app.use("/chatrooms", getchatRoute);
-//app.use("api/chat/:id", chatRoute);
+app.get("/api/chat/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  res.render("chatpage", { id: id });
+});
 
 app.get("/rest", protect, (req, res) => {
   console.log("error" + req.error);

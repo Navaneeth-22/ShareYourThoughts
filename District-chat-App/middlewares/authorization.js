@@ -21,7 +21,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
 
-      req.user = await User.findById(decoded.id).select("-password").exec();
+      req.user = await User.findById(decoded.id).select("-password");
       console.log(req.user);
 
       next();
@@ -32,12 +32,12 @@ const protect = asyncHandler(async (req, res, next) => {
     }
   }
 
-  if (!token) {
+  /* if (!token) {
     req.error = "Not authorized, no token";
     //res.redirect("/error");
     next();
     //throw new Error("Not authorized, no token");
-  }
+  }*/
 });
 
 module.exports = protect;
