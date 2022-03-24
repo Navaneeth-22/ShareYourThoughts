@@ -5,7 +5,7 @@ const addUser = async (req, res) => {
   console.log("hgjhg" + req.body);
   if (!req.error) {
     const user = req.user;
-
+    console.log("user is" + user);
     if (user.occupation == "user") {
       const added = Chat.findOneAndUpdate(
         { chatRoomName: user.district + " Main" },
@@ -13,12 +13,15 @@ const addUser = async (req, res) => {
           $push: { users: user._id },
         },
         { new: true }
-      ).populate("users", "-password");
+      )
+        .populate("users", "-password")
+        .exec();
       if (!added) {
         res.status(404);
         // throw new Error("Chat Not Found");
       } else {
-        res.json(added);
+        console.log("new one is " + added);
+        res.status(200).json({ success: true });
       }
     }
     if (user.occupation == "MLA") {

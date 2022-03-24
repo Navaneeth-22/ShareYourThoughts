@@ -19,7 +19,6 @@ const signupUser = asyncHandler(async (req, res) => {
     !userName ||
     !email ||
     !aadharNo ||
-    !dateOfBirth ||
     !occupation ||
     !district ||
     !state ||
@@ -83,7 +82,8 @@ const signupUser = asyncHandler(async (req, res) => {
     });
 
     // res.redirect(`/user/${userinfo.Name}`);
-    return res.redirect("/Home");
+    //return res.redirect("/Home");
+    res.status(200).json({ success: true });
   } else {
     res.status(400);
     throw new Error("failed to create user");

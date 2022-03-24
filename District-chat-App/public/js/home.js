@@ -16,7 +16,25 @@ $(window).on("load", function () {
   //  $(".mainPage").hide();
   //  setTimeout(removeLoader, 5000);
   let sessionId = getCookie("SESSIONID");
-
+  if (sessionId) {
+    $.ajax({
+      type: "PUT",
+      url: "http://localhost:3000/addUser",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${sessionId}`,
+      },
+      success: function (data) {
+        //localStorage.token = data.token;
+        // window.location.replace("http://localhost:3000/Home");
+        //  alert("user added " + sessionId);
+        console.log(data);
+      },
+      error: function (data) {
+        alert("there was an error in adding user");
+      },
+    });
+  }
   console.log(sessionId);
   if (!sessionId) {
     $(".upward-trans").append(

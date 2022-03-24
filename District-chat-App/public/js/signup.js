@@ -1,5 +1,17 @@
-const { default: axios } = require("axios");
-
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 $(document).ready(function () {
   $("#submitBut").click(() => {
     console.log("hello");
@@ -30,9 +42,16 @@ $(document).ready(function () {
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:3000/api/user/login",
+      url: "http://localhost:3000/api/user/signup",
       data: JSON.stringify({
+        Name: Name,
+        userName: userName,
+        email: email,
         aadharNo: aadharNo,
+        occupation: occupation,
+        photo: photo,
+        district: district,
+        state: state,
         password: password,
       }),
       headers: {
@@ -40,8 +59,8 @@ $(document).ready(function () {
       },
       success: function (data) {
         //localStorage.token = data.token;
-
         window.location.replace("/Home");
+        a; //lert("successs" + data.message);
       },
       error: function (data) {
         alert("Login Failed" + data.message);
@@ -49,7 +68,7 @@ $(document).ready(function () {
     });
   });
 });
-
+/*
 const loginUser = async () => {
   const Name = document.getElementById("NameId").value;
   const userName = document.getElementById("userNameId").value;
@@ -87,3 +106,4 @@ const loginUser = async () => {
     localStorage.setItem("user-info", JSON.stringify(data));
   } catch (error) {}
 };
+*/
