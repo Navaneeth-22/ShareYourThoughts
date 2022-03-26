@@ -11,21 +11,25 @@ async function createChatRoom() {
         chatRoomName: x + " Main",
         district: x,
         state: "Andhra Pradesh",
+        latestMessage: null,
       });
       await Chat.create({
         chatRoomName: x + " Road department",
         district: x,
         state: "Andhra Pradesh",
+        latestMessage: null,
       });
       await Chat.create({
         chatRoomName: x + " Electricity department",
         district: x,
         state: "Andhra Pradesh",
+        latestMessage: null,
       });
       await Chat.create({
         chatRoomName: x + " Water resource department",
         district: x,
         state: "Andhra Pradesh",
+        latestMessage: null,
       });
     }
   });

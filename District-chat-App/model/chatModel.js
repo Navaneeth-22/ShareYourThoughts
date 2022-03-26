@@ -1,6 +1,6 @@
-const { localsName } = require("ejs");
-
 const mongoose = require("mongoose");
+const Message = require("./messageModel");
+const User = require("./userModel");
 
 const chatSchema = new mongoose.Schema(
   {

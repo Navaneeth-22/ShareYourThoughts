@@ -27,7 +27,7 @@ $(window).on("load", function () {
       success: function (data) {
         //localStorage.token = data.token;
         // window.location.replace("http://localhost:3000/Home");
-        //  alert("user added " + sessionId);
+        alert("user added " + sessionId);
         console.log(data);
       },
       error: function (data) {
@@ -59,11 +59,11 @@ $(window).on("load", function () {
       success: function (data) {
         //localStorage.token = data.token;
         data.forEach(function (x) {
-          urlfor = `http://localhost:3000/api/chat/${x.chatId}`;
+          urlfor = `http://localhost:3000/api/chat`;
           $(".cards-container").append(
             `<div class="cards">
       <div><img src="/images/message.png" alt="" /></div>
-      <div class="heading">${x.chatName}</div>
+      <div class="heading">${x.chatRoomName}</div>
       <div class="text">
         User can make full use of chat rooms and send all the problems
         to respective organisation.

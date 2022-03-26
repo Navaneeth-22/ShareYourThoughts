@@ -6,7 +6,8 @@ const createChatRoom = require("./config/createChatRooms.js");
 const Chat = require("./model/chatModel.js");
 const connectDB = require("./config/dbConnect.js");
 const getchatRoute = require("./routes/getchatRoute.js");
-const chatRoute = require("./routes/chatRoute");
+const chatRoute = require("./routes/chatRoute.js");
+const messageRoute = require("./routes/messageRoute.js");
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
@@ -46,24 +47,25 @@ var io = require("socket.io")(server, {
   },
 });
 
-//app.set("socket.io", io);
-
 app.use((req, res, next) => {
   req.io = io;
   return next();
 });
-//app.use("/public", express.static(path.join(__dirname, "/public/")));
+
 console.log(path.join(__dirname, "/public/"));
 app.use("/api/user/login", loginRoute);
 app.use("/api/user/signup", signupRoute);
 app.use("/addUser", addUserRoute);
 app.use("/chatrooms", getchatRoute);
-app.get("/api/chat/:id", (req, res) => {
-  const id = req.params.id;
-  console.log(id);
-  res.render("chatpage", { id: id });
+app.get("/api/chat", (req, res) => {
+  res.render("chatpage");
 });
-
+app.use("/api/postMessages", messageRoute);
+app.get("/getUserInfo", protect, (req, res) => {
+  if (!req.error) {
+    res.status(200).json(req.user);
+  } else res.render("error", { message: req.error });
+});
 app.get("/rest", protect, (req, res) => {
   console.log("error" + req.error);
   if (req.error) {

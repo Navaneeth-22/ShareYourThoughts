@@ -15,7 +15,7 @@
   }
 }
 ::-webkit-scrollbar {
-  width: 0.5em;
+  width: 0.25em;
   height: 1em;
 }
 
@@ -27,7 +27,7 @@
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to right, #aa076b, #61045f);
-  border: 0.25em solid rgb(49, 128, 123);
+  border: 0.25em solid rgb(169, 174, 174);
   border-radius: 100vw;
 }
 
@@ -66,28 +66,25 @@
 
 .chat-leftsidebar {
   height: 100vh;
-  background-color: #303841;
+  background-color: #1c1c1d;
+  overflow: hidden;
 }
 @media (min-width: 992px) {
   .chat-leftsidebar {
-    min-width: 380px;
-    max-width: 380px;
+    min-width: 398px;
+    max-width: 398px;
   }
-}
-*,
-::after,
-::before {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .membersIn {
   height: calc(100vh - 280px);
   position: relative;
+  display: flex;
+  /* align-content: center; */
 }
 .avatar-xs {
-  height: 2.2rem;
-  width: 2.2rem;
+  height: 2.9rem;
+  width: 2.9rem;
 }
 
 .d-flex {
@@ -208,4 +205,18 @@
 
 .list-container li {
   clear: both;
+}
+a {
+  text-decoration: none;
+}
+
+.custom-card-css {
+  border-bottom: 2px solid white;
+  padding-bottom: 20px;
+}
+
+.card-container {
+  width: 98%;
+  padding: 5px;
+  background-color: #16191c !important;
 }
