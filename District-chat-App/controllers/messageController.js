@@ -18,7 +18,9 @@ const messagePost = async (req, res) => {
         console.log("hello");
         message = await User.populate(message, {
           path: "chat.users",
-          model: Chat,
+        });
+        message = await User.populate(message, {
+          path: "chat.districtAdmins",
         });
         console.log(message);
         console.log("id:" + messagebody.chat);

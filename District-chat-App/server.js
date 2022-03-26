@@ -8,6 +8,7 @@ const connectDB = require("./config/dbConnect.js");
 const getchatRoute = require("./routes/getchatRoute.js");
 const chatRoute = require("./routes/chatRoute.js");
 const messageRoute = require("./routes/messageRoute.js");
+const getMessagesRoute = require("./routes/getMessagesRoute.js");
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
@@ -61,6 +62,13 @@ app.get("/api/chat", (req, res) => {
   res.render("chatpage");
 });
 app.use("/api/postMessages", messageRoute);
+app.get("/:chatId/messages", (req, res, next) => {
+  const id = req.params.chatId;
+  console.log("id was " + id);
+  req.id = id;
+  next();
+});
+app.use("/:chatId/messages", getMessagesRoute);
 app.get("/getUserInfo", protect, (req, res) => {
   if (!req.error) {
     res.status(200).json(req.user);
