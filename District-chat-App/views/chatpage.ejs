@@ -6,44 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta content="Responsive Bootstrap 4 Chat App" name="description" />
     <meta content="Themesbrand" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
 
-    <!-- magnific-popup css -->
-    <link
-      href="assets/libs/magnific-popup/magnific-popup.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-
-    <!-- owl.carousel css -->
-    <link
-      rel="stylesheet"
-      href="assets/libs/owl.carousel/assets/owl.carousel.min.css"
-    />
-
-    <link
-      rel="stylesheet"
-      href="assets/libs/owl.carousel/assets/owl.theme.default.min.css"
-    />
-
-    <!-- Bootstrap Css -->
-    <link
-      href="assets/css/bootstrap.min.css"
-      id="bootstrap-style"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <!-- Icons Css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/chat3.css" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
-    <link
-      href="assets/css/app.min.css"
-      id="app-style"
-      rel="stylesheet"
-      type="text/css"
-    />
+
     <link rel=”stylesheet”
     href=”https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css”
     />
@@ -53,6 +18,11 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <script
+      src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+      integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
 
@@ -78,30 +48,11 @@
             <div class="p-3 p-lg-4 border-bottom-util user-chat-topbar">
               <div class="row align-items-center">
                 <div class="col-sm-8 col-4 flex-row-reverse">
-                  <ul class="list-inline user-chat-nav text-end mb-0">
+                  <ul class="list-inline user-chat-nav text-start mb-0">
                     <li class="list-inline-item">
-                      <div class="dropdown">
-                        <button
-                          class="btn nav-btn dropdown-toggle"
-                          type="button"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i class="ri-search-line"></i>
-                        </button>
-                        <div
-                          class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-md"
-                          style=""
-                        >
-                          <div class="search-box p-2">
-                            <input
-                              type="text"
-                              class="form-control bg-light border-0"
-                              placeholder="Search.."
-                            />
-                          </div>
-                        </div>
+                      <div id="typing-gif" style="display: flex;align-items: center;">
+                        <p id="typer-name" style="color: aliceblue;font-size: medium;text-align: center;">Navya Simhadri</p>
+                        <img src="/images/dots.gif" alt="image" style="width: 30px;"></img>
                       </div>
                     </li>
                   </ul>
@@ -821,6 +772,7 @@
             </div>
           </div>
         </div>
+       
         <div class="chat-input-section p-3 p-lg-4 border-top mb-0">
           <div class="row g-0">
             <div class="col">
@@ -900,6 +852,8 @@
         </div>
       </div>
     </div>
+
+    <script src="/js/clientsocket.js"></script>
     <script src="/js/chatroom.js"></script>
   </body>
 </html>

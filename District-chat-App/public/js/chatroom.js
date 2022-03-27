@@ -1,3 +1,7 @@
+let typing = false;
+let userLoggedIn;
+let selectedChatId;
+
 function getCookie(cname) {
   let name = cname + "=";
   let ca = document.cookie.split(";");
@@ -12,10 +16,26 @@ function getCookie(cname) {
   }
   return "";
 }
-let userLoggedIn;
-let selectedChatId;
 
 $(document).ready(() => {
+  $("#typing-gif").hide();
+  socketio.on("success", (id) => {
+    console.log("user joined in" + id + ":" + JSON.stringify(userLoggedIn));
+  });
+
+  socketio.on("joined chat", (info) => {
+    console.log("jpined chat Room " + info.chatId + " " + info.user.Name);
+  });
+
+  socketio.on("typing", (info) => {
+    console.log("user is typing");
+    $("#typer-name").text(info.user.Name);
+    $("#typing-gif").show();
+  });
+
+  socketio.on("stop typing", () => {
+    $("#typing-gif").hide();
+  });
   gettingChatData();
 
   /* if (sessionId) {
@@ -132,7 +152,13 @@ function getAllMessages(chatId) {
 
 $("body").on("click", ".groups", function () {
   selectedChatId = $(this).attr("id");
+
   getAllMessages(selectedChatId);
+  let info = {
+    chatId: selectedChatId,
+    user: userLoggedIn,
+  };
+  socketio.emit("join chat", info);
   console.log("hello");
   console.log(selectedChatId);
 });
@@ -141,7 +167,7 @@ $("#messageSendBut").click(() => {
   sendMessage();
 });
 $("#inputmessageId").keydown((event) => {
-  // updateTyping();
+  updateTyping();
 
   if (event.which === 13) {
     sendMessage();
@@ -149,8 +175,35 @@ $("#inputmessageId").keydown((event) => {
   }
 });
 
+function updateTyping() {
+  if (!connected) return;
+
+  if (!typing && (selectedChatId != null || selectedChatId != undefined)) {
+    typing = true;
+    let info2 = {
+      chatId: selectedChatId,
+      user: userLoggedIn,
+    };
+    socketio.emit("typing", info2);
+  }
+
+  lastTypingTime = new Date().getTime();
+  var timerLength = 3000;
+
+  setTimeout(() => {
+    var timeNow = new Date().getTime();
+    var timeDiff = timeNow - lastTypingTime;
+
+    if (timeDiff >= timerLength && typing) {
+      socketio.emit("stop typing", selectedChatId);
+      typing = false;
+    }
+  }, timerLength);
+}
+
 function gettingChatData() {
   let sessionId = getCookie("SESSIONID");
+
   if (sessionId) {
     $.ajax({
       type: "GET",
@@ -167,20 +220,22 @@ function gettingChatData() {
         alert("Login Failed" + data.message);
       },
     });
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:3000/chatrooms",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${sessionId}`,
-      },
-      success: function (data) {
-        $("#grouplist").empty();
-        data.forEach(function (x) {
-          console.log("chat is : " + x);
+  }
 
-          $("#grouplist").append(
-            `<li>
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:3000/chatrooms",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${sessionId}`,
+    },
+    success: function (data) {
+      $("#grouplist").empty();
+      data.forEach(function (x) {
+        console.log("chat is : " + x);
+
+        $("#grouplist").append(
+          `<li>
             <a href="#" class = "groups" style="text-decoration: none" id=${
               x._id
             }>
@@ -233,16 +288,17 @@ function gettingChatData() {
               </div>
             </a>
           </li>`
-          );
-        });
-        console.log(data);
-      },
-      error: function (data) {
-        alert("Login Failed" + data.message);
-      },
-    });
-  }
+        );
+      });
+      console.log(data);
+    },
+    error: function (data) {
+      alert("could not get chat data Please login first!");
+      window.location.replace("http://localhost:3000/api/user/login");
+    },
+  });
 }
+
 function sendMessage() {
   let content = $("#inputmessageId").val().trim();
   let sessionId = getCookie("SESSIONID");
@@ -260,6 +316,9 @@ function sendMessage() {
       },
       success: function (message) {
         console.log(message);
+        // appendmessageHtml(message);
+        addCurrentMessage(message);
+        socketio.emit("new message", message);
         gettingChatData();
         $("#inputmessageId").val("");
       },
@@ -282,14 +341,14 @@ const appendmessageHtml = (data) => {
     today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   data.forEach((x) => {
     if (x.sender._id === userLoggedIn._id) {
-      leftMessage = 1;
-      rightMessage = 0;
-    } else {
       leftMessage = 0;
       rightMessage = 1;
+    } else {
+      leftMessage = 1;
+      rightMessage = 0;
     }
     $(".chatMessages").append(
-      `<li class=${rightMessage === 1 ? "left-message" : "right-message"}>
+      `<li class=${rightMessage === 1 ? "right-message" : "left-message"}>
       <div class="conversation-list">
         <div class="chat-avatar">
           <img
@@ -358,3 +417,85 @@ const appendmessageHtml = (data) => {
     );
   });
 };
+
+function addCurrentMessage(x) {
+  let leftMessage;
+  let rightMessage;
+  if (x.sender._id === userLoggedIn._id) {
+    leftMessage = 0;
+    rightMessage = 1;
+  } else {
+    leftMessage = 1;
+    rightMessage = 0;
+  }
+  if (x.chat._id === selectedChatId) {
+    $(".chatMessages").append(
+      `<li class=${rightMessage === 1 ? "right-message" : "left-message"}>
+      <div class="conversation-list">
+        <div class="chat-avatar">
+          <img
+            class="profileimage"
+            src=${x?.sender?.photo ? x?.sender?.photo : "/images/avatar-1.jpg"}
+            alt=""
+          />
+        </div>
+
+        <div class="user-chat-content">
+          <div class="ctext-wrap">
+            <div class="ctext-wrap-content" style="
+            max-width: 320px;">
+              <p class="mb-0" style= "line-break:anywhere;text-align: justify;">${
+                x?.content
+              }</p>
+              <p class="chat-time mb-0">
+                <i class="ri-time-line align-middle"></i>
+                <span class="align-middle">${x.createdAt}</span>
+              </p>
+            </div>
+            <div class="dropdown align-self-start">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="ri-more-2-fill"></i>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#"
+                  >Copy
+                  <i
+                    class="ri-file-copy-line float-end text-muted"
+                  ></i
+                ></a>
+                <a class="dropdown-item" href="#"
+                  >Save
+                  <i
+                    class="ri-save-line float-end text-muted"
+                  ></i
+                ></a>
+                <a class="dropdown-item" href="#"
+                  >Forward
+                  <i
+                    class="ri-chat-forward-line float-end text-muted"
+                  ></i
+                ></a>
+                <a class="dropdown-item" href="#"
+                  >Delete
+                  <i
+                    class="ri-delete-bin-line float-end text-muted"
+                  ></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="conversation-name">${x.sender.Name}</div>
+        </div>
+      </div>
+    </li>`
+    );
+  }
+}

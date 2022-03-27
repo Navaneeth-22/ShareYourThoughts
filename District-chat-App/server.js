@@ -14,6 +14,8 @@ const dotenv = require("dotenv");
 const path = require("path");
 const bodyparser = require("body-parser");
 const { request } = require("express");
+const { Socket } = require("socket.io-client");
+const messagePost = require("./controllers/messageController.js");
 
 __dirname = path.resolve();
 
@@ -41,12 +43,13 @@ const PORT = 3000;
 const server = app.listen(PORT, () =>
   console.log("Server listening on port " + PORT)
 );
-var io = require("socket.io")(server, {
+/*var io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
-});
+});*/
+const io = require("socket.io")(server, { pingTimeout: 60000 });
 
 app.use((req, res, next) => {
   req.io = io;
@@ -59,6 +62,7 @@ app.use("/api/user/signup", signupRoute);
 app.use("/addUser", addUserRoute);
 app.use("/chatrooms", getchatRoute);
 app.get("/api/chat", (req, res) => {
+  // res.redirect("/api/user/login");
   res.render("chatpage");
 });
 app.use("/api/postMessages", messageRoute);
@@ -106,6 +110,38 @@ app.get("/Home", (req, res) => {
 
 io.on("connection", function (socket) {
   console.log(socket.id);
+
+  socket.on("make connection", (user) => {
+    console.log("user through socket" + JSON.stringify(user));
+    socket.join(user._id);
+    socket.emit("success", user._id);
+  });
+  socket.on("join chat", (info) => {
+    console.log("joining chat room with id" + JSON.stringify(info.chatId));
+    socket.join(info.chatId);
+    socket.in(info.chatId).emit("joined chat", info);
+  });
+  socket.on("typing", (info) => {
+    console.log("typign in " + info.chatId);
+    socket.in(info.chatId).emit("typing", info);
+  });
+  socket.on("stop typing", (chatId) => {
+    socket.in(chatId).emit("stop typing");
+  });
+
+  socket.on("new message", (message) => {
+    let chat = message.chat;
+    if (!chat.users) {
+      console.log("This chat doesn't contains users" + message.chat._id);
+    }
+
+    chat.users.forEach((user) => {
+      if (user._id === message.sender._id) {
+        return;
+      }
+      socket.in(user._id).emit("message arrived", message);
+    });
+  });
 
   socket.on("sendNotification", function (details) {
     socket.broadcast.emit("sendNotification", details);

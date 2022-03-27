@@ -27,6 +27,8 @@ const protect = asyncHandler(async (req, res, next) => {
       next();
     } catch (error) {
       req.error = "Not authorized, token failed";
+      console.log(req.error);
+      // res.redirect("http://localhost:3000/api/user/login");
       next();
       // throw new Error("Not authorized, token failed");
     }
