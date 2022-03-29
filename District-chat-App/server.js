@@ -59,6 +59,9 @@ app.use((req, res, next) => {
 console.log(path.join(__dirname, "/public/"));
 app.use("/api/user/login", loginRoute);
 app.use("/api/user/signup", signupRoute);
+app.use("/api/user/profile", (req, res) => {
+  res.render("modifiedprofile");
+});
 app.use("/addUser", addUserRoute);
 app.use("/chatrooms", getchatRoute);
 app.get("/api/chat", (req, res) => {
