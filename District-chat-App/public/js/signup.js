@@ -60,7 +60,7 @@ $(document).ready(function () {
       success: function (data) {
         //localStorage.token = data.token;
         window.location.replace("/Home");
-        a; //lert("successs" + data.message);
+        //lert("successs" + data.message);
       },
       error: function (data) {
         alert("Login Failed" + data.message);

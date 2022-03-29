@@ -23,4 +23,4 @@ let interval = setInterval(() => {
     connection();
     clearInterval(interval);
   }
-}, 100);
+}, 1000);

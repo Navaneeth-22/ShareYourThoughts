@@ -47,6 +47,9 @@ $(window).on("load", function () {
     $(".upward-trans").append(
       '<li><a href="http://localhost:3000/api/user/profile" class="nav-link dabba">Profile</a></li>'
     );
+    $(".upward-trans").append(
+      '<li><a href="#" onclick="logout()" class="nav-link dabba">Logout</a></li>'
+    );
   }
   if (sessionId) {
     $.ajax({
@@ -87,4 +90,9 @@ function removeLoader() {
     $("#loadingDiv").remove(); //makes page more lightweight
     $(".mainPage").show();
   });
+}
+
+function logout() {
+  $.removeCookie("SESSIONID");
+  window.location.reload();
 }

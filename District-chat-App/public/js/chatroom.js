@@ -318,6 +318,7 @@ function sendMessage() {
         console.log(message);
         // appendmessageHtml(message);
         addCurrentMessage(message);
+        scrollToBottom(true);
         socketio.emit("new message", message);
         gettingChatData();
         $("#inputmessageId").val("");
@@ -497,5 +498,16 @@ function addCurrentMessage(x) {
       </div>
     </li>`
     );
+  }
+}
+
+function scrollToBottom(animated) {
+  var container = $(".chatMessages");
+  var scrollHeight = container[0].scrollHeight;
+
+  if (animated) {
+    container.animate({ scrollTop: scrollHeight }, "slow");
+  } else {
+    container.scrollTop(scrollHeight);
   }
 }
