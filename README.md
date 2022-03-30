@@ -12,11 +12,11 @@
 
 ##### 5. Seshu Medapi -- Roll No: S20200010124
 
-To run the app:
+### To run the app:
 
-1.Do ###npm i to install all the dependencies
-2.Create a .env file in District-chat-App folder
-3.In .env file add these two lines:
-MONGO_URI=your mongoDb Atlas connect your application url
-TOKEN_SECRET=give a random string
-4.To run application : In package.json file you can click on debug or in terminal run ###npm run start
+## 1.Do npm i to install all the dependencies
+## 2.Create a .env file in District-chat-App folder
+## 3.In .env file add these two lines:
+### MONGO_URI=your mongoDb Atlas connect your application url
+### TOKEN_SECRET=give a random string
+## 4.To run application : In package.json file you can click on debug or in terminal run npm run start
