@@ -28,4 +28,4 @@ npm i
 4.To run application : In package.json file you can click on debug or in terminal run 
 ```bash
 npm run start
-```bash
+```
