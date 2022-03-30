@@ -25,4 +25,7 @@ npm i
 	MONGO_URI=your mongoDb Atlas connect your application url
 	TOKEN_SECRET=give a random string
 ```
-4.To run application : In package.json file you can click on debug or in terminal run npm run start
+4.To run application : In package.json file you can click on debug or in terminal run 
+```bash
+npm run start
+```bash
