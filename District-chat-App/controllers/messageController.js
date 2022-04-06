@@ -4,12 +4,28 @@ const Message = require("../model/messageModel.js");
 const messagePost = async (req, res) => {
   if (!req.error) {
     const user = req.user;
+    let messagebody;
     console.log("chat id" + req.body.chatId);
-    let messagebody = {
-      sender: user._id,
-      chat: req.body.chatId,
-      content: req.body.content,
-    };
+    if (req.body.boolComp === false) {
+      messagebody = {
+        sender: user._id,
+        chat: req.body.chatId,
+        content: req.body.content,
+        boolComp: req.body.boolComp,
+      };
+    } else {
+      messagebody = {
+        sender: user._id,
+        chat: req.body.chatId,
+        complaint: {
+          heading: req.body.heading,
+          content: req.body.complaint,
+          address: req.body.address,
+        },
+        boolComp: req.body.boolComp,
+      };
+    }
+
     Message.create(messagebody)
       .then(async (message) => {
         message = await message.populate("sender");

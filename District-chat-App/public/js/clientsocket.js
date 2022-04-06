@@ -10,6 +10,7 @@ socketio.on("success", (id) => {
 
 socketio.on("message arrived", (message) => {
   addCurrentMessage(message);
+  scrollToBottom(true);
 });
 function connection() {
   console.log("ser" + userLoggedIn);

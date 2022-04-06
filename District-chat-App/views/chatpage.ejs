@@ -18,6 +18,11 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+   
+    <script 
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"
+    ></script>
+
     <script
       src="https://cdn.socket.io/4.4.1/socket.io.min.js"
       integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
@@ -62,8 +67,9 @@
               </div>
             </div>
             <div class="conversation-box p-3 p-lg-4 position-relative">
-              <div class="box-content" style="margin: -24px">
+              <div class="box-content boxMessages" style="margin: -24px">
                 <div class="list-container">
+                 
                   <ul class="list-unstyled mb-0 chatMessages">
                     <li class="right-message">
                       <div class="conversation-list">
@@ -769,6 +775,7 @@
                       </div>
                     </li>
                   </ul>
+               
                 </div>
               </div>
             </div>
@@ -822,7 +829,7 @@
                       <i class="ri-emotion-happy-line"></i>
                     </button>
                   </li>
-                  <li
+                  <!-- <li
                     class="list-inline-item"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -846,7 +853,38 @@
                         />
                       </svg>
                     </button>
-                  </li>
+                  </li> -->
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Enter Complaint</button>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enter Complaint</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label required">Heading</label>
+                                <textarea class="form-control" id="headingId"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required">Complaint</label>
+                                <textarea class="form-control" id="complaintId"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required">Address</label>
+                                <textarea class="form-control" id="addressId"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="complaintBut">Submit</button>
+                        <button type="submit" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
                 </ul>
               </div>
             </div>
@@ -854,7 +892,7 @@
         </div>
       </div>
     </div>
-
+    
     <script src="/js/clientsocket.js"></script>
     <script src="/js/chatroom.js"></script>
   </body>
