@@ -2,28 +2,32 @@ const mongoose = require("mongoose");
 const Chat = require("./chatModel");
 const User = require("./userModel");
 
-const messageSchema = new mongoose.Schema(
+const mailSchema = new mongoose.Schema(
   {
-    sender: {
+    room: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chat",
+      //required: true,
+    },
+    starred: {
+      type: Boolean,
+      default: false,
+    },
+    important: {
+      type: Boolean,
+      default: false,
+    },
+    sentBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-    },
-    chat: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Chat",
-      required: true,
-    },
-    content: {
-      type: String,
-      trim: true,
     },
     complaint: {
       heading: {
         type: String,
         trim: true,
       },
-      content: {
+      complaint: {
         type: String,
         trim: true,
       },
@@ -32,20 +36,14 @@ const messageSchema = new mongoose.Schema(
         trim: true,
       },
     },
-    
-    boolComp: {
-      type: Boolean,
+    district: {
+      type: String,
+      trim: true,
     },
-    readBy: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
   },
   { timestamps: true }
 );
 
-const Message = mongoose.model("Message", messageSchema);
+const Mail = mongoose.model("Mail", mailSchema);
 
-module.exports = Message;
+module.exports = Mail;

@@ -1,0 +1,28 @@
+body{
+    
+    margin: 50px;
+  }
+#searchbar{
+	margin-left: 15%;
+	padding:15px;
+	border-radius: 20px;
+}
+
+input[type=text] {
+	width: 70%;
+	box-sizing: border-box;
+    
+}
+
+
+
+input[type=text]:focus {
+	width: 70%;
+}
+
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+    
+  }
+

@@ -8,7 +8,11 @@ const connectDB = require("./config/dbConnect.js");
 const getchatRoute = require("./routes/getchatRoute.js");
 const chatRoute = require("./routes/chatRoute.js");
 const messageRoute = require("./routes/messageRoute.js");
+const complaintRoute = require("./routes/complaintRoute.js");
 const getMessagesRoute = require("./routes/getMessagesRoute.js");
+const getAllUsersRoute = require("./routes/getAllUsersRoute.js");
+const getMailRoute = require("./routes/getMailRoute.js");
+const sentMailsRoute = require("./routes/sentMailsRoute.js");
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
@@ -68,6 +72,10 @@ app.get("/api/chat", (req, res) => {
   // res.redirect("/api/user/login");
   res.render("chatpage");
 });
+app.get("/api/gmail", (req, res) => {
+  // res.redirect("/api/user/login");
+  res.render("gmail");
+});
 app.use("/api/postMessages", messageRoute);
 app.get("/:chatId/messages", (req, res, next) => {
   const id = req.params.chatId;
@@ -75,7 +83,17 @@ app.get("/:chatId/messages", (req, res, next) => {
   req.id = id;
   next();
 });
+app.get("/:roomId/inbox", (req, res, next) => {
+  const id = req.params.roomId;
+  console.log("id was " + id);
+  req.id = id;
+  next();
+});
+app.use("/api/sendComplaint", complaintRoute);
 app.use("/:chatId/messages", getMessagesRoute);
+app.use("/:roomId/inbox", getMailRoute);
+app.use("/sentMails", sentMailsRoute);
+app.use("/getAllUsers", getAllUsersRoute);
 app.get("/getUserInfo", protect, (req, res) => {
   if (!req.error) {
     res.status(200).json(req.user);
@@ -110,7 +128,9 @@ app.get("/home1", protect, (req, res) => {
 app.get("/Home", (req, res) => {
   return res.render("home");
 });
-
+app.get("/adminPortal", (req, res) => {
+  res.render("adminPortal");
+});
 io.on("connection", function (socket) {
   console.log(socket.id);
 

@@ -48,6 +48,12 @@ $(window).on("load", function () {
       '<li><a href="http://localhost:3000/api/user/profile" class="nav-link dabba">Profile</a></li>'
     );
     $(".upward-trans").append(
+      '<li><a href="http://localhost:3000/adminPortal" class="nav-link dabba">AdminPortal</a></li>'
+    );
+    $(".upward-trans").append(
+      '<li><a href="http://localhost:3000/api/gmail"  class="nav-link dabba">Complaint</a></li>'
+    );
+    $(".upward-trans").append(
       '<li><a href="#" onclick="logout()" class="nav-link dabba">Logout</a></li>'
     );
   }

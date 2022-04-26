@@ -179,35 +179,17 @@ $("#inputmessageId").keydown((event) => {
     return false;
   }
 });
-$("body").on("click", "#forwardMessageId", () => {
+/*$("body").on("click", "#forwardMessageId", () => {
   console.log("clivvj");
-  $("body").append(`<!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>`);
+  $(".layout-wrapper").append(`<div class="modal-body">
+  <h5>Popover in a modal</h5>
+  <p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p>
+  <hr>
+  <h5>Tooltips in a modal</h5>
+  <p><a href="#" class="tooltip-test" title="Tooltip">This link</a> and <a href="#" class="tooltip-test" title="Tooltip">that link</a> have tooltips on hover.</p>
+</div>`);
 });
-
+*/
 function updateTyping() {
   if (!connected) return;
 
@@ -484,11 +466,43 @@ const appendmessageHtml = (data) => {
                     class="ri-save-line float-end text-muted"
                   ></i
                 ></a>
-                <a class="dropdown-item" id="forwardMessageId"
+               
+       
+                <a class="dropdown-item" id="forwardMessageId" data-bs-toggle="modal" data-bs-target="#myModal1"
                   >Forward
-                  <i
-                    class="ri-chat-forward-line float-end text-muted"
-                  ></i
+                  <div class="modal" id="myModal1">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Enter Complaint</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form>
+                                  <div class="mb-3">
+                                      <label class="form-label required">Heading</label>
+                                      <textarea class="form-control" id="headingId"></textarea>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label class="form-label required">Complaint</label>
+                                      <textarea class="form-control" id="complaintId"></textarea>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label class="form-label required">Address</label>
+                                      <textarea class="form-control" id="addressId"></textarea>
+                                  </div>
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary" id="complaintBut">Submit</button>
+                              <button type="submit" class="btn btn-danger">Cancel</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <i
+              class="ri-chat-forward-line float-end text-muted"
+            ></i
                 ></a>
                 <a class="dropdown-item" id="deleteMessageId"
                   >Delete
