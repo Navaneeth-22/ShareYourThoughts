@@ -254,6 +254,13 @@ body{
     font-weight: 400;
     color: grey;
 }
+.emailList_list{
+
+        width: 92%;
+        overflow-y: scroll;
+        position: relative;
+        height: 800px;
+}
 
 
 

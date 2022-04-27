@@ -12,6 +12,10 @@ socketio.on("message arrived", (message) => {
   addCurrentMessage(message);
   scrollToBottom(true);
 });
+socketio.on("mail arrived", (mail) => {
+  addCurrentMail(mail);
+  console.log("in client side " + mail);
+});
 function connection() {
   console.log("ser" + userLoggedIn);
   socketio.emit("make connection", userLoggedIn);

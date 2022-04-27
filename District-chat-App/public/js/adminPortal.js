@@ -29,11 +29,11 @@ function getAllusers() {
     },
     success: function (data) {
       for (let i = 0; i < data.length; i++) {
-        $("body").append(`<div class="container"></div>
+        $("body").append(`<center>
         <div class="content">
             <div class="user-details">
               <div class="input-box">
-                <span class="details" id="name">Full Name</span>
+                <p class="details" id="name">Full Name</p>
                 <input
                   type="text"
                   placeholder="Enter your name"
@@ -42,7 +42,7 @@ function getAllusers() {
                 />
               </div>
               <div class="input-box">
-                <span class="details" id="username">Username</span>
+                <p class="details" id="username">Username</p>
                 <input
                   type="text"
                   placeholder="Enter your username"
@@ -51,7 +51,7 @@ function getAllusers() {
                 />
               </div>
               <div class="input-box">
-                <span class="details" id="eamil">Email</span>
+                <p class="details" id="eamil">Email</p>
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -62,7 +62,7 @@ function getAllusers() {
              
               
               <div class="input-box">
-                <span class="details" id="aadhar">Aadhar</span>
+                <p class="details" id="aadhar">Aadhar</p>
                 <input
                   type="number"
                   placeholder="Enter aadhar"
@@ -76,7 +76,7 @@ function getAllusers() {
            
     
               <div class="input-box">
-                <span class="details" id="district">District</span>
+                <p class="details" id="district">District</p>
                 <input
                   type="text"
                   placeholder="Enter District"
@@ -85,7 +85,7 @@ function getAllusers() {
                 />
               </div>
               <div class="input-box">
-                <span class="details" id="state">State</span>
+                <p class="details" id="state">State</p>
                 <input
                   type="text"
                   placeholder="Enter state"
@@ -94,7 +94,7 @@ function getAllusers() {
                 />
               </div>
               <div class="input-box">
-                <span class="details" id="occupation">Occupation</span>
+                <p class="details" id="occupation">Occupation</p>
                 <input
                   type="text"
                   placeholder="Enter accupation"
@@ -104,9 +104,8 @@ function getAllusers() {
               </div>
             </div>
     
-            <button id="${data[i]._id}">Update</button>
-            <button id="${data[i]._id}">Delete</button>
-          </div>`);
+           
+          </div></center>`);
       }
       for (let i = 0; i < data.length; i++) {
         const element = data[i];
@@ -117,8 +116,6 @@ function getAllusers() {
         $(`#occupationId${i}`).val(data[i].occupation);
         $(`#districtId${i}`).val(data[i].district);
         $(`#stateId${i}`).val(data[i].state);
-        $(`#update${i}`).addClass("update");
-        $(`#delete${i}`).addClass("delete");
       }
     },
     error: function (data) {
@@ -126,17 +123,3 @@ function getAllusers() {
     },
   });
 }
-
-$("body").on("click", ".update", function () {
-  let id = $(this).attr("id");
-  $.ajax({
-    type: "PUT",
-    url: "http://localhost:3000/updateUser",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${sessionId}`,
-    },
-    success: function (data) {},
-    error: function (data) {},
-  });
-});

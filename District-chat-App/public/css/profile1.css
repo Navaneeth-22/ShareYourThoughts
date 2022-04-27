@@ -1,33 +1,99 @@
-body {
-  background: #006400;
+body{
+  margin-top:20px;
+  background-color:black;
+}
+.main{
+  padding:15px;
+  font-family:Arial,Helvetica,sans-serif;
+  background-color: black;
+}
+.topbar{
+  background-color:teal;
+  overflow: hidden; 
+  color: aquamarine;
+}
+.topbar a{
+  float:right;
+  background-color:whitesmoke;
+ text-align:center;
+  padding:20px 26px;
+  text-decoration:none;
+  font-size:26px;
+}
+.sidebar{
+  background-color:#333;
+  color:white;
+  height:100%
+
+}
+.sidebar a{
+  margin-left:10px;
+  display:block;
+  color:white ;
+  padding-bottom:10px;
+  font-size:30px;
+  text-decoration:none;
+
+}
+.card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  color: teal;
+
+} 
+.content{
+  background-color: orange;
+
+}
+.emailRow{
+ display: flex;
+ align-items: center;
+ height: 50px;
+ border-bottom: 1px solid whitesmoke;
+ cursor: pointer;
+ z-index: 999;
 }
 
-.form-control:focus {
-  box-shadow: none;
-  border-color: rgb(0, 0, 0);
+.emailRow:hover{
+ border-top: 1px solid whitesmoke;
+ box-shadow: 0px 4px 4px -2px rgba(0,0,0,0.24);
 }
 
-.profile-button {
-  background: orange;
-  box-shadow: none;
-  border: none;
+.emaiRow_message{
+ display: flex;
+ flex: 0.8;
+ align-items: center;
+ font-size: 13px;
 }
 
-.profile-button:hover {
-  background: #006400;
+.emaiRow_message h4{
+ width: 400px;
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ padding-left: 5px;
+ padding-right: 5px;
+}
+.emailRow_title{
+ font-size: 13px;
+ flex: 0.3;
 }
 
-.profile-button:focus {
-  background: #006400;
-  box-shadow: none;
+.emailRow_time{
+ padding-right: 15px;
+ font-size: 10px;
+ font-weight: bold;
 }
 
-.profile-button:active {
-  background: #006400;
-  box-shadow: none;
+.emailRow_description{
+ font-weight: 400;
+ color: grey;
 }
+.emailList_list{
 
-.back:hover {
-  color: #006400;
-  cursor: pointer;
+     width: 92%;
+     overflow-y: scroll;
+     position: relative;
+     height: 800px;
 }

@@ -13,6 +13,20 @@ function getCookie(cname) {
   }
   return "";
 }
+//sessionId=cbkjsbckjdv;ghjg=sknlkffj;djbd=dl fkjf kj; == [ sessionId=cbkjsbckjdv,]
+//sessionId=cbkjsbckjdv=>c
+//sessionid= ->name
+//c.substring(8,20)
+//div id="content"
+{
+  /* <div  id="gh ">
+  <div id="hgh"> 
+
+  </div>
+</div>
+$("#hgh").append(`<p>${}`) */
+}
+
 $(document).ready(() => {
   let session = getCookie("SESSIONID");
 
@@ -27,9 +41,19 @@ $(document).ready(() => {
       userInf = data;
       console.log(data);
       console.log(userInf);
-      $("#content").append(
-        `<p>Name:${userInf?.Name}</p><p>AadharNo:${userInf?.aadharNo}</p><p>Name:${userInf?.district}</p><p>Name:${userInf.state}</p>`
-      );
+      $("#nameId").empty();
+
+      $("#nameId").append(userInf.Name);
+      $("#emailID").empty();
+
+      $("#emailID").append(userInf.email);
+      $("#aadharID").empty();
+
+      $("#aadharID").append(userInf.aadharNo);
+
+      $("#stateID").empty();
+
+      $("#stateID").append(userInf.state);
     },
     error: function (data) {
       alert("Not able to get user details" + data.message);
@@ -37,6 +61,6 @@ $(document).ready(() => {
   });
 });
 
-$("#getHome").click(() => {
+$(".profile-button").click(() => {
   window.location.replace("http://localhost:3000/Home");
 });

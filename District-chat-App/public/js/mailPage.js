@@ -36,23 +36,123 @@ $("body").on("click", ".emailRow", function () {
   console.log(mail + "mail id is");
   console.log(inboxMails);
   let com;
-  inboxMails.map((x) => {
-    if (x._id === mail) {
-      $(".mailBut").click();
-      if (x.room.chatRoomName.includes("Main"))
-        $(".complaintSelect select").val("Main");
-      else if (x.room.chatRoomName.includes("Road"))
-        $(".complaintSelect  select").val("Road department");
-      else if (x.room.chatRoomName.includes("Water"))
-        $(".complaintSelect  select").val("Water resource department");
-      else $(".complaintSelect  select").val("Electricity department");
-      $("#header").val(`${x.complaint.heading}`);
-      $("#complaint").val(`${x.complaint.complaint}`);
-      $("#address").val(`${x.complaint.address}`);
-    }
-  });
+  if ($("#inbox").hasClass("sidebarOption_active")) {
+    inboxMails.map((x) => {
+      if (x._id === mail) {
+        $(".mailBut").click();
+        if (x.room.chatRoomName.includes("Main"))
+          $(".complaintSelect select").val("Main");
+        else if (x.room.chatRoomName.includes("Road"))
+          $(".complaintSelect  select").val("Road department");
+        else if (x.room.chatRoomName.includes("Water"))
+          $(".complaintSelect  select").val("Water resource department");
+        else $(".complaintSelect  select").val("Electricity department");
+        $("#header").val(`${x.complaint.heading}`);
+        $("#complaint").val(`${x.complaint.complaint}`);
+        $("#address").val(`${x.complaint.address}`);
+      }
+    });
+  } else if ($("#sentByHim").hasClass("sidebarOption_active")) {
+    sentMails.map((x) => {
+      if (x._id === mail) {
+        $(".mailBut").click();
+        if (x.room.chatRoomName.includes("Main"))
+          $(".complaintSelect select").val("Main");
+        else if (x.room.chatRoomName.includes("Road"))
+          $(".complaintSelect  select").val("Road department");
+        else if (x.room.chatRoomName.includes("Water"))
+          $(".complaintSelect  select").val("Water resource department");
+        else $(".complaintSelect  select").val("Electricity department");
+        $("#header").val(`${x.complaint.heading}`);
+        $("#complaint").val(`${x.complaint.complaint}`);
+        $("#address").val(`${x.complaint.address}`);
+      }
+    });
+  } else {
+    sentMails.map((x) => {
+      if (x._id === mail) {
+        $(".mailBut").click();
+        if (x.room.chatRoomName.includes("Main"))
+          $(".complaintSelect select").val("Main");
+        else if (x.room.chatRoomName.includes("Road"))
+          $(".complaintSelect  select").val("Road department");
+        else if (x.room.chatRoomName.includes("Water"))
+          $(".complaintSelect  select").val("Water resource department");
+        else $(".complaintSelect  select").val("Electricity department");
+        $("#header").val(`${x.complaint.heading}`);
+        $("#complaint").val(`${x.complaint.complaint}`);
+        $("#address").val(`${x.complaint.address}`);
+      }
+    });
+  }
 });
-
+function addCurrentMail(x) {
+  // let sessionId = getCookie("SESSIONID");
+  if (x.room.chatRoomName.includes("Main")) {
+    if ($(".mainSection").hasClass("section_selected")) {
+      $(".emailList_list").append(` <div class="emailRow" id=${x._id}>
+    <div class="emailRow_options">
+      <input type="checkbox" />
+      <span class="material-icons starSymbol"> star_border </span>
+      <span class="material-icons"> label_important </span>
+    </div>
+    <h3 class="emailRow_title">${x.sentBy.Name}</h3>
+    <div class="emaiRow_message">
+      <h4>${x.complaint.heading}</h4>
+    </div>
+    <p class="emailRow_time">${x.createdAt}</p>
+  </div>`);
+    }
+  }
+  if (x.room.chatRoomName.includes("Water")) {
+    if ($(".waterSection").hasClass("section_selected")) {
+      $(".emailList_list").prepend(` <div class="emailRow" id=${x._id}>
+    <div class="emailRow_options">
+      <input type="checkbox" />
+      <span class="material-icons starSymbol"> star_border </span>
+      <span class="material-icons"> label_important </span>
+    </div>
+    <h3 class="emailRow_title">${x.sentBy.Name}</h3>
+    <div class="emaiRow_message">
+      <h4>${x.complaint.heading}</h4>
+    </div>
+    <p class="emailRow_time">${x.createdAt}</p>
+  </div>`);
+    }
+  }
+  if (x.room.chatRoomName.includes("Road")) {
+    if ($(".roadSection").hasClass("section_selected")) {
+      $(".emailList_list").prepend(` <div class="emailRow" id=${x._id}>
+    <div class="emailRow_options">
+      <input type="checkbox" />
+      <span class="material-icons starSymbol"> star_border </span>
+      <span class="material-icons"> label_important </span>
+    </div>
+    <h3 class="emailRow_title">${x.sentBy.Name}</h3>
+    <div class="emaiRow_message">
+      <h4>${x.complaint.heading}</h4>
+    </div>
+    <p class="emailRow_time">${x.createdAt}</p>
+  </div>`);
+    }
+  }
+  if (x.room.chatRoomName.includes("Electricity")) {
+    if ($(".electricitySection").hasClass("section_selected")) {
+      $(".emailList_list").prepend(` <div class="emailRow" id=${x._id}>
+    <div class="emailRow_options">
+      <input type="checkbox" />
+      <span class="material-icons starSymbol"> star_border </span>
+      <span class="material-icons"> label_important </span>
+    </div>
+    <h3 class="emailRow_title">${x.sentBy.Name}</h3>
+    <div class="emaiRow_message">
+      <h4>${x.complaint.heading}</h4>
+    </div>
+    <p class="emailRow_time">${x.createdAt}</p>
+  </div>`);
+    }
+  }
+}
 function gettingChatData() {
   let sessionId = getCookie("SESSIONID");
 
@@ -153,10 +253,15 @@ function getInboxMails(roomId) {
       success: function (data) {
         inboxMails = data;
         data.forEach((x) => {
+          let stylecss;
+          if (x.starred === true) {
+            stylecss = "color:gold;";
+          } else stylecss = "color:grey;";
+
           $(".emailList_list").append(` <div class="emailRow" id=${x._id}>
           <div class="emailRow_options">
             <input type="checkbox" />
-            <span class="material-icons starSymbol"> star_border </span>
+            <span class="material-icons starSymbol " style =  ${stylecss} > star_border </span>
             <span class="material-icons"> label_important </span>
           </div>
           <h3 class="emailRow_title">${x.sentBy.Name}</h3>
@@ -199,11 +304,7 @@ $("#complaintBut").click(() => {
       },
       success: function (message) {
         console.log(message);
-        // appendmessageHtml(message);
-        //addCurrentMessage(message);
-        // scrollToBottom(true);
-        //socketio.emit("new message", message);
-        //gettingChatData();
+        socketio.emit("new mail", message);
         $("#headingId").val("");
         $("#complaintId").val("");
         $("#addressId").val("");
@@ -219,23 +320,53 @@ $("#complaintBut").click(() => {
   }
 });
 
-$("body").on("click", ".starSymbol", ".emailRows", function () {
-  //$(this).css("color", "gold");
+$("body").on("click", ".starSymbol", function () {
+  let sessionId = getCookie("SESSIONID");
+  let mailId = $(this).parent().parent().attr("id");
+  console.log(mailId);
+  console.log("star symbol is clickeds");
+  //if ($("#inbox").hasClass("sidebarOption_active")) {
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:3000/${mailId}/updateStarred`,
 
-  console.log($(this).attr("id"));
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${sessionId}`,
+    },
+    success: function (data) {
+      console.log("starred data is" + data);
+      if (data.starred === false) {
+        $(this).css("color", "grey");
+      } else {
+        $(this).css("color", "gold");
+      }
+    },
+    error: function (data) {
+      alert("updated starred error" + data.message);
+    },
+  });
+  //} else if ($("#sentByHim").hasClass("sidebarOption_active")) {
+  //}
 });
 $("body").on("click", "#inbox", function () {
   $(".emailList_sections").show();
   $("#inbox").addClass("sidebarOption_active");
   $("#sentByHim").removeClass("sidebarOption_active");
-  getInboxMails(mainId);
+  $("#starredByHim").removeClass("sidebarOption_active");
+  if ($(".waterSection").hasClass("section_selected")) getInboxMails(waterId);
+  else if ($(".roadSection").hasClass("section_selected"))
+    getInboxMails(roadId);
+  else if ($(".electricitySection").hasClass("section_selected"))
+    getInboxMails(electricityId);
+  else getInboxMails(mainId);
 });
 $("body").on("click", "#sentByHim", function () {
   //sidebarOption_active
   $(".emailList_sections").hide();
   $("#inbox").removeClass("sidebarOption_active");
   $("#sentByHim").addClass("sidebarOption_active");
-
+  $("#starredByHim").removeClass("sidebarOption_active");
   let sessionId = getCookie("SESSIONID");
   $(".emailList_list").empty();
   $.ajax({
@@ -248,11 +379,58 @@ $("body").on("click", "#sentByHim", function () {
     },
     success: function (data) {
       sentMails = data;
-      data.forEach((x) => {
-        $(".emailList_list").append(` <div class="emailRow" id=${x._id}>
+      console.log(sentMails);
+      sentMails.forEach((x) => {
+        if (x.starred === true) {
+          stylecss = "color:gold;";
+        } else stylecss = "color:grey;";
+
+        $(".emailList_list").prepend(` <div class="emailRow" id=${x._id}>
           <div class="emailRow_options">
             <input type="checkbox" />
-            <span class="material-icons starSymbol"> star_border </span>
+            <span class="material-icons starSymbol" style =  ${stylecss}> star_border </span>
+            <span class="material-icons"> label_important </span>
+          </div>
+          <h3 class="emailRow_title">${x.sentBy.Name}</h3>
+          <div class="emaiRow_message">
+            <h4>${x.complaint.heading}</h4>
+          </div>
+          <p class="emailRow_time">${x.createdAt}</p>
+        </div>`);
+      });
+    },
+    error: function (data) {
+      console.log("there was an error");
+    },
+  });
+});
+$("body").on("click", "#starredByHim", function () {
+  //sidebarOption_active
+  $(".emailList_sections").hide();
+  $("#inbox").removeClass("sidebarOption_active");
+  $("#sentByHim").removeClass("sidebarOption_active");
+  $("#starredByHim").addClass("sidebarOption_active");
+  let sessionId = getCookie("SESSIONID");
+  $(".emailList_list").empty();
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:3000/sentMails/starredMails`,
+
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${sessionId}`,
+    },
+    success: function (data) {
+      starredMails = data;
+      console.log(starredMails);
+      starredMails.forEach((x) => {
+        if (x.starred === true) {
+          stylecss = "color:gold;";
+        } else stylecss = "color:grey;";
+        $(".emailList_list").prepend(` <div class="emailRow" id=${x._id}>
+          <div class="emailRow_options">
+            <input type="checkbox" />
+            <span class="material-icons starSymbol" style =  ${stylecss}> star_border </span>
             <span class="material-icons"> label_important </span>
           </div>
           <h3 class="emailRow_title">${x.sentBy.Name}</h3>
@@ -297,4 +475,7 @@ $("body").on("click", ".electricitySection", function () {
   $(".waterSection").removeClass("section_selected");
 });
 
+$("body").on("click", ".profile", function () {
+  window.location.replace("http://localhost:3000/api/user/profile");
+});
 // // your code

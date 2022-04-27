@@ -90,13 +90,13 @@ $(window).on("load", function () {
   }
   $("body").show();
 });
-function removeLoader() {
-  $("#loadingDiv").fadeOut(500, function () {
-    // fadeOut complete. Remove the loading div
-    $("#loadingDiv").remove(); //makes page more lightweight
-    $(".mainPage").show();
-  });
-}
+// function removeLoader() {
+//   $("#loadingDiv").fadeOut(500, function () {
+//     // fadeOut complete. Remove the loading div
+//     $("#loadingDiv").remove(); //makes page more lightweight
+//     $(".mainPage").show();
+//   });
+// }
 
 function logout() {
   $.removeCookie("SESSIONID");

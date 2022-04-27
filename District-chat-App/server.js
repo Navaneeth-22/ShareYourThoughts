@@ -11,6 +11,7 @@ const messageRoute = require("./routes/messageRoute.js");
 const complaintRoute = require("./routes/complaintRoute.js");
 const getMessagesRoute = require("./routes/getMessagesRoute.js");
 const getAllUsersRoute = require("./routes/getAllUsersRoute.js");
+const starredMailRoute = require("./routes/starredMailRoute.js");
 const getMailRoute = require("./routes/getMailRoute.js");
 const sentMailsRoute = require("./routes/sentMailsRoute.js");
 const express = require("express");
@@ -20,6 +21,7 @@ const bodyparser = require("body-parser");
 const { request } = require("express");
 const { Socket } = require("socket.io-client");
 const messagePost = require("./controllers/messageController.js");
+const Mail = require("./model/mailModel.js");
 
 __dirname = path.resolve();
 
@@ -93,7 +95,14 @@ app.use("/api/sendComplaint", complaintRoute);
 app.use("/:chatId/messages", getMessagesRoute);
 app.use("/:roomId/inbox", getMailRoute);
 app.use("/sentMails", sentMailsRoute);
+//app.use("/starredMails", sentMailsRoute);
 app.use("/getAllUsers", getAllUsersRoute);
+app.get("/:mailId/updateStarred", (req, res, next) => {
+  let id = req.params.mailId;
+  req.id = id;
+  next();
+});
+app.use("/:mailId/updateStarred", starredMailRoute);
 app.get("/getUserInfo", protect, (req, res) => {
   if (!req.error) {
     res.status(200).json(req.user);
@@ -163,6 +172,19 @@ io.on("connection", function (socket) {
         return;
       }
       socket.in(user._id).emit("message arrived", message);
+    });
+  });
+  socket.on("new mail", (mail) => {
+    let chat = mail.room;
+
+    console.log("in socket io " + chat.chatRoomName);
+    if (!chat.users) {
+      console.log("This chat doesn't contains users" + mail.chat._id);
+    }
+
+    chat.users.forEach((user) => {
+      console.log("user is " + user._id);
+      socket.in(user).emit("mail arrived", mail);
     });
   });
 
