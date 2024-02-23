@@ -7,10 +7,10 @@ router.get("/", async (req, res) => {
   let user = req.user;
   let mailId = req.id;
 
-  console.log("mail id " + mailId);
+  //console.log("mail id " + mailId);
   try {
     let mail = await Mail.findById({ _id: mailId }).exec();
-    console.log("mail is +++++++" + mail);
+    //console.log("mail is +++++++" + mail);
     if (mail != null || mail != undefined) {
       if (mail.starred === false) {
         await Mail.findByIdAndUpdate(
@@ -21,10 +21,10 @@ router.get("/", async (req, res) => {
           { new: true },
           function (err, result) {
             if (err) {
-              console.log("there was an error in updating starred");
+              //console.log("there was an error in updating starred");
               res.status(400);
             }
-            console.log("upadte mail is **************" + result);
+            //console.log("upadte mail is **************" + result);
             res.status(200).send(result);
           }
         );
@@ -37,10 +37,10 @@ router.get("/", async (req, res) => {
           { new: true },
           function (err, result) {
             if (err) {
-              console.log("there was an error in updating starred");
+              //console.log("there was an error in updating starred");
               res.status(400);
             }
-            console.log("upadte mail is **************" + result);
+            //console.log("upadte mail is **************" + result);
             res.status(200).send(result);
           }
         );
@@ -48,7 +48,7 @@ router.get("/", async (req, res) => {
     }
   } catch (error) {
     //res.status(200).{error}
-    console.log("there was an error in finding the mail");
+    //console.log("there was an error in finding the mail");
     res.status(400);
   }
 });

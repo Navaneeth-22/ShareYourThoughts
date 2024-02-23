@@ -14,7 +14,7 @@ function getCookie(cname) {
 }
 $(document).ready(function () {
   $("#submitBut").click(() => {
-    console.log("hello");
+    //consolele.log("hello");
     const Name = $("#nameId").val();
     /*  Name,
     userName,
@@ -34,7 +34,7 @@ $(document).ready(function () {
     const district = $("#districtId").val();
     const state = $("#stateId").val();
     const password = $("#passwordId").val();
-    console.log("jkjkg" + aadharNo + password);
+    //consolele.log("jkjkg" + aadharNo + password);
     if (!aadharNo || !password) {
       alert("aadhar and password required");
       return;

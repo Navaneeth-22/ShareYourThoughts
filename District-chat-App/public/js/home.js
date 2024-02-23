@@ -28,14 +28,14 @@ $(window).on("load", function () {
         //localStorage.token = data.token;
         // window.location.replace("http://localhost:3000/Home");
         alert("user added " + sessionId);
-        console.log(data);
+        //consolele.log(data);
       },
       error: function (data) {
         alert("there was an error in adding user");
       },
     });
   }
-  console.log(sessionId);
+  //consolele.log(sessionId);
   if (!sessionId) {
     $(".upward-trans").append(
       '<li><a href="http://localhost:3000/api/user/login" class="nav-link dabba">Login</a></li>'
@@ -81,7 +81,7 @@ $(window).on("load", function () {
     </div>`
           );
         });
-        console.log(data);
+        //consolele.log(data);
       },
       error: function (data) {
         alert("Login Failed" + data.message);

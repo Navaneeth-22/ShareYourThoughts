@@ -1,9 +1,9 @@
 $(document).ready(function () {
   $("#submitBut").click(() => {
-    console.log("hello");
+    //consolele.log("hello");
     const aadharNo = $("#aadharId").val();
     const password = $("#passwordId").val();
-    console.log("jkjkg" + aadharNo + password);
+    //consolele.log("jkjkg" + aadharNo + password);
     if (!aadharNo || !password) {
       alert("aadhar and password required");
       return;
@@ -47,11 +47,11 @@ function getCookie(cname) {
 }
 const home = async () => {
   let sessionId = getCookie("SESSIONID");
-  console.log(sessionId);
+  //consolele.log(sessionId);
   const element = document.getElementById("parag");
 
   element.innerText = JSON.stringify(sessionId);
-  console.log("klk" + JSON.stringify(sessionId));
+  //consolele.log("klk" + JSON.stringify(sessionId));
   const config2 = {
     method: "GET",
     headers: {

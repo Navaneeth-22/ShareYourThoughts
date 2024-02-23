@@ -9,11 +9,11 @@ const sentComplaints = async (req, res) => {
       .populate("sentBy")
       .populate({ path: "room", model: Chat })
       .exec();
-    console.log(mails);
+    //console.log(mails);
     res.status(200).json(mails);
   } catch (error) {
     res.status(400);
-    console.log(error);
+    //console.log(error);
   }
 };
 module.exports = sentComplaints;

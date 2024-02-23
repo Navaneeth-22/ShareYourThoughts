@@ -5,7 +5,7 @@ const complaintPost = async (req, res) => {
   if (!req.error) {
     const user = req.user;
     let messagebody;
-    // console.log("chat id" + req.body.chatId);
+    // //console.log("chat id" + req.body.chatId);
 
     const chat = await Chat.findById(req.body.room).exec();
     messagebody = {
@@ -22,22 +22,22 @@ const complaintPost = async (req, res) => {
     Mail.create(messagebody)
       .then(async (message) => {
         message = await message.populate("sentBy");
-        console.log(message);
+        //console.log(message);
         message = await message.populate({ path: "room", model: Chat });
-        console.log("hello");
+        //console.log("hello");
         message = await User.populate(message, {
           path: "chat.users",
         });
         message = await User.populate(message, {
           path: "chat.districtAdmins",
         });
-        console.log(message);
-        console.log("id:" + messagebody.chat);
+        //console.log(message);
+        //console.log("id:" + messagebody.chat);
 
         res.status(201).send(message);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
         res.sendStatus(400);
       });
   }

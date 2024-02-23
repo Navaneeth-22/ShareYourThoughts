@@ -17,18 +17,18 @@ const protect = asyncHandler(async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
-      console.log("tok" + token);
+      //consolele.log("tok" + token);
 
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
 
       req.user = await User.findById(decoded.id).select("-password");
-      console.log("room id is " + req.body.RoomId);
-      console.log(req.user);
+      //consolele.log("room id is " + req.body.RoomId);
+      //consolele.log(req.user);
 
       next();
     } catch (error) {
       req.error = "Not authorized, token failed";
-      console.log(req.error);
+      //consolele.log(req.error);
       // res.redirect("http://localhost:3000/api/user/login");
       next();
       // throw new Error("Not authorized, token failed");

@@ -6,7 +6,7 @@ const tokenGenerator = require("../config/tokenGenerator.js");
 const authUser = async (req, res, next) => {
   const { aadharNo, password } = req.body;
 
-  console.log("aadhar" + req.body.aadharNo, req.body.password);
+  //console.log("aadhar" + req.body.aadharNo, req.body.password);
   const user = await User.findOne({ aadharNo }).exec();
   if (user) {
     const verified = await bcrypt.compare(password, user.password);
@@ -36,12 +36,12 @@ const authUser = async (req, res, next) => {
       res.redirect("/Home");
     } else {
       res.status(401).json({ message: "Wrong user or password" });
-      console.log("failed login");
+      //console.log("failed login");
       return;
     }
   } else {
     res.status(401).json({ message: "Wrong user or password" });
-    console.log("failed login");
+    //console.log("failed login");
     return;
   }
 };

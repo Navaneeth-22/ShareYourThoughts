@@ -10,7 +10,7 @@ const getMessages = async (req, res) => {
     res.status(200).json(messages);
   } catch (error) {
     res.status(400);
-    console.log(error);
+    //console.log(error);
   }
 };
 

@@ -25,7 +25,7 @@ const Mail = require("./model/mailModel.js");
 
 __dirname = path.resolve();
 
-console.log(__dirname);
+//console.log(__dirname);
 
 dotenv.config();
 
@@ -62,7 +62,7 @@ app.use((req, res, next) => {
   return next();
 });
 
-console.log(path.join(__dirname, "/public/"));
+//console.log(path.join(__dirname, "/public/"));
 app.use("/api/user/login", loginRoute);
 app.use("/api/user/signup", signupRoute);
 app.use("/api/user/profile", (req, res) => {
@@ -81,13 +81,13 @@ app.get("/api/gmail", (req, res) => {
 app.use("/api/postMessages", messageRoute);
 app.get("/:chatId/messages", (req, res, next) => {
   const id = req.params.chatId;
-  console.log("id was " + id);
+  //console.log("id was " + id);
   req.id = id;
   next();
 });
 app.get("/:roomId/inbox", (req, res, next) => {
   const id = req.params.roomId;
-  console.log("id was " + id);
+  //console.log("id was " + id);
   req.id = id;
   next();
 });
@@ -109,14 +109,14 @@ app.get("/getUserInfo", protect, (req, res) => {
   } else res.render("error", { message: req.error });
 });
 app.get("/rest", protect, (req, res) => {
-  console.log("error" + req.error);
+  //console.log("error" + req.error);
   if (req.error) {
     res.render("error", { message: req.error });
   } else res.status(200).send("api  is running");
 });
 
 app.get("/error/", protect, (req, res) => {
-  console.log(req.error);
+  //console.log(req.error);
   res.render("error", { message: req.error });
   next();
 });
@@ -124,7 +124,7 @@ app.get("/error/", protect, (req, res) => {
 app.get("/home1", protect, (req, res) => {
   if (req.user) {
     let name = req.user.Name;
-    console.log("name is " + name);
+    //console.log("name is " + name);
     const user = {
       ...req.user,
     };
@@ -141,20 +141,20 @@ app.get("/adminPortal", (req, res) => {
   res.render("adminPortal");
 });
 io.on("connection", function (socket) {
-  console.log(socket.id);
+  //console.log(socket.id);
 
   socket.on("make connection", (user) => {
-    console.log("user through socket" + JSON.stringify(user));
+    //console.log("user through socket" + JSON.stringify(user));
     socket.join(user._id);
     socket.emit("success", user._id);
   });
   socket.on("join chat", (info) => {
-    console.log("joining chat room with id" + JSON.stringify(info.chatId));
+    //console.log("joining chat room with id" + JSON.stringify(info.chatId));
     socket.join(info.chatId);
     socket.in(info.chatId).emit("joined chat", info);
   });
   socket.on("typing", (info) => {
-    console.log("typign in " + info.chatId);
+    //console.log("typign in " + info.chatId);
     socket.in(info.chatId).emit("typing", info);
   });
   socket.on("stop typing", (chatId) => {
@@ -164,7 +164,7 @@ io.on("connection", function (socket) {
   socket.on("new message", (message) => {
     let chat = message.chat;
     if (!chat.users) {
-      console.log("This chat doesn't contains users" + message.chat._id);
+      //console.log("This chat doesn't contains users" + message.chat._id);
     }
 
     chat.users.forEach((user) => {
@@ -177,13 +177,13 @@ io.on("connection", function (socket) {
   socket.on("new mail", (mail) => {
     let chat = mail.room;
 
-    console.log("in socket io " + chat.chatRoomName);
+    //console.log("in socket io " + chat.chatRoomName);
     if (!chat.users) {
-      console.log("This chat doesn't contains users" + mail.chat._id);
+      //console.log("This chat doesn't contains users" + mail.chat._id);
     }
 
     chat.users.forEach((user) => {
-      console.log("user is " + user._id);
+      //console.log("user is " + user._id);
       socket.in(user).emit("mail arrived", mail);
     });
   });

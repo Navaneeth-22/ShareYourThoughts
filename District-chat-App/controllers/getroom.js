@@ -13,15 +13,15 @@ const getroom = async (req, res) => {
       .sort({ updatedAt: -1 })
       .then(async (data) => {
         data = await User.populate(data, { path: "latestMessage.sender" });
-        console.log(data);
+        //console.log(data);
         res.status(200).json(data);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
         res.status(400);
       });
   } else {
-    console.log("iam here");
+    //console.log("iam here");
     res.status(400).json(req.error);
   }
 };

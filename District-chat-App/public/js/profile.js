@@ -39,8 +39,8 @@ $(document).ready(() => {
     },
     success: function (data) {
       userInf = data;
-      console.log(data);
-      console.log(userInf);
+      //consolele.log(data);
+      //consolele.log(userInf);
       $("#nameId").empty();
 
       $("#nameId").append(userInf.Name);

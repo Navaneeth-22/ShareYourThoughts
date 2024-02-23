@@ -3,19 +3,19 @@ const Chat = require("../model/chatModel.js");
 const User = require("../model/userModel");
 
 const addUser = async (req, res) => {
-  console.log("hgjhg" + JSON.stringify(req.body));
+  // //console.log("hgjhg" + JSON.stringify(req.body));
   if (!req.error) {
     const user = req.user;
-    console.log("user is" + user);
+    // //console.log("user is" + user);
     const alreadyAdded = await Chat.findOne({
       users: { $elemMatch: { $eq: req.user._id } },
     }).populate("users", "-password");
 
     if (!alreadyAdded) {
-      console.log("klkl");
+      //console.log("klkl");
       if (user.occupation === "user") {
-        console.log("added" + alreadyAdded);
-        console.log("first one exev");
+        //console.log("added" + alreadyAdded);
+        //console.log("first one exev");
 
         const added = Chat.findOneAndUpdate(
           { chatRoomName: user.district + " Main" },
@@ -30,11 +30,11 @@ const addUser = async (req, res) => {
           res.status(404);
           // throw new Error("Chat Not Found");
         } else {
-          console.log("new one is " + added);
+          //console.log("new one is " + added);
           res.status(200).json({ success: true });
         }
       } else if (user.occupation == "MLA") {
-        console.log("2 one exev");
+        //console.log("2 one exev");
         const added = Chat.findOneAndUpdate(
           { chatRoomName: user.district + " Main" },
           {
@@ -88,13 +88,13 @@ const addUser = async (req, res) => {
             added2,
             added3,
           };
-          console.log(added, added1, added2, added3);
+          //console.log(added, added1, added2, added3);
           res.status(200).json({ success: true });
         }
       } else if (user.occupation != "MLA" && user.occupation != "user") {
-        console.log("this one executed");
-        console.log(user.occupation);
-        console.log(user.district + " " + user.occupation);
+        //console.log("this one executed");
+        //console.log(user.occupation);
+        //console.log(user.district + " " + user.occupation);
         const added = await Chat.findOneAndUpdate(
           { chatRoomName: user.district + " Main" },
           {
@@ -125,19 +125,16 @@ const addUser = async (req, res) => {
             added,
             added1,
           };
-          console.log(
-            "first one added is " + added,
-            "second one added is " + added1
-          );
+                  
           res.status(200).json({ success: true });
         }
       }
     }
 
     /* if (alreadyAdded) {
-      console.log("klkl");
+      //console.log("klkl");
       if (user.occupation == "user") {
-        console.log("added" + alreadyAdded);
+        //console.log("added" + alreadyAdded);
 
         const added = Chat.fin(
           { chatRoomName: user.district + " Main" },
@@ -152,7 +149,7 @@ const addUser = async (req, res) => {
           res.status(404);
           // throw new Error("Chat Not Found");
         } else {
-          console.log("new one is " + added);
+          //console.log("new one is " + added);
           res.status(200).json({ success: true });
         }
       } else if (user.occupation == "MLA") {
@@ -209,7 +206,7 @@ const addUser = async (req, res) => {
             added2,
             added3,
           };
-          console.log(added, added1, added2, added3);
+          //console.log(added, added1, added2, added3);
           res.status(200).json({ success: true });
         }
       } else {
@@ -243,7 +240,7 @@ const addUser = async (req, res) => {
             added,
             added1,
           };
-          console.log(added, added1);
+          //console.log(added, added1);
           res.status(200).json({ success: true });
         }
       }

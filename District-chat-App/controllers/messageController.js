@@ -5,7 +5,7 @@ const messagePost = async (req, res) => {
   if (!req.error) {
     const user = req.user;
     let messagebody;
-    console.log("chat id" + req.body.chatId);
+    // console.log("chat id" + req.body.chatId);
     if (req.body.boolComp === false) {
       messagebody = {
         sender: user._id,
@@ -29,21 +29,21 @@ const messagePost = async (req, res) => {
     Message.create(messagebody)
       .then(async (message) => {
         message = await message.populate("sender");
-        console.log(message);
+        // console.log(message);
         message = await message.populate({ path: "chat", model: Chat });
-        console.log("hello");
+        // console.log("hello");
         message = await User.populate(message, {
           path: "chat.users",
         });
         message = await User.populate(message, {
           path: "chat.districtAdmins",
         });
-        console.log(message);
-        console.log("id:" + messagebody.chat);
+        // console.log(message);
+        // console.log("id:" + messagebody.chat);
         let chat = await Chat.findByIdAndUpdate(messagebody.chat, {
           latestMessage: message,
         }).catch((error) => console.log(error));
-        console.log(chat);
+        // console.log(chat);
         res.status(201).send(message);
       })
       .catch((error) => {

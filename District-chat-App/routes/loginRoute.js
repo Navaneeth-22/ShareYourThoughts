@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
 router.post("/", authUser);
 router.get("/user/:name", (req, res) => {
   let name = req.params.name;
-  console.log("name is" + name);
+  //console.log("name is" + name);
   res.render("home", { name: name });
 });
 

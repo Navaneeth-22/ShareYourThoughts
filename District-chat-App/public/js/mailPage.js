@@ -26,15 +26,15 @@ function getCookie(cname) {
 
 $(document).ready(() => {
   gettingChatData();
-  console.log(mainId, waterId, roadId, electricityId);
+  //consolele.log(mainId, waterId, roadId, electricityId);
   $("body").show();
   getInboxMails(mainId);
   $(".emailRow").show();
 });
 $("body").on("click", ".emailRow", function () {
   let mail = $(this).attr("id");
-  console.log(mail + "mail id is");
-  console.log(inboxMails);
+  //consolele.log(mail + "mail id is");
+  //consolele.log(inboxMails);
   let com;
   if ($("#inbox").hasClass("sidebarOption_active")) {
     inboxMails.map((x) => {
@@ -167,7 +167,7 @@ function gettingChatData() {
       },
       success: function (data) {
         userLoggedIn = data;
-        console.log(data);
+        //consolele.log(data);
       },
       error: function (data) {
         alert("Login Failed" + data.message);
@@ -185,7 +185,7 @@ function gettingChatData() {
     success: function (data) {
       $(".emailList_sections").empty();
       data.forEach(function (x) {
-        console.log("chat is : " + x);
+        //consolele.log("chat is : " + x);
         if (x.chatRoomName.includes("Main")) {
           mainId = x._id;
           $(".maindept").attr("id", `${x?._id}`);
@@ -227,7 +227,7 @@ function gettingChatData() {
           );
         }
       });
-      console.log(data);
+      //consolele.log(data);
     },
     error: function (data) {
       alert("could not get chat data Please login first!");
@@ -239,8 +239,8 @@ function getInboxMails(roomId) {
   let sessionId = getCookie("SESSIONID");
   if (sessionId) {
     // let main = $(".mainSection").attr("id");
-    // console.log("id for the main is " + main);
-    console.log(roomId);
+    // //consolele.log("id for the main is " + main);
+    //consolele.log(roomId);
     $(".emailList_list").empty();
     $.ajax({
       type: "GET",
@@ -273,7 +273,7 @@ function getInboxMails(roomId) {
         });
       },
       error: function (data) {
-        console.log("there was an error");
+        //consolele.log("there was an error");
       },
     });
   }
@@ -303,7 +303,7 @@ $("#complaintBut").click(() => {
         authorization: `Bearer ${sessionId}`,
       },
       success: function (message) {
-        console.log(message);
+        //consolele.log(message);
         socketio.emit("new mail", message);
         $("#headingId").val("");
         $("#complaintId").val("");
@@ -323,8 +323,8 @@ $("#complaintBut").click(() => {
 $("body").on("click", ".starSymbol", function () {
   let sessionId = getCookie("SESSIONID");
   let mailId = $(this).parent().parent().attr("id");
-  console.log(mailId);
-  console.log("star symbol is clickeds");
+  //consolele.log(mailId);
+  //consolele.log("star symbol is clickeds");
   //if ($("#inbox").hasClass("sidebarOption_active")) {
   $.ajax({
     type: "GET",
@@ -335,7 +335,7 @@ $("body").on("click", ".starSymbol", function () {
       authorization: `Bearer ${sessionId}`,
     },
     success: function (data) {
-      console.log("starred data is" + data);
+      //consolele.log("starred data is" + data);
       if (data.starred === false) {
         $(this).css("color", "grey");
       } else {
@@ -379,7 +379,7 @@ $("body").on("click", "#sentByHim", function () {
     },
     success: function (data) {
       sentMails = data;
-      console.log(sentMails);
+      //consolele.log(sentMails);
       sentMails.forEach((x) => {
         if (x.starred === true) {
           stylecss = "color:gold;";
@@ -400,7 +400,7 @@ $("body").on("click", "#sentByHim", function () {
       });
     },
     error: function (data) {
-      console.log("there was an error");
+      //consolele.log("there was an error");
     },
   });
 });
@@ -422,7 +422,7 @@ $("body").on("click", "#starredByHim", function () {
     },
     success: function (data) {
       starredMails = data;
-      console.log(starredMails);
+      //consolele.log(starredMails);
       starredMails.forEach((x) => {
         if (x.starred === true) {
           stylecss = "color:gold;";
@@ -442,7 +442,7 @@ $("body").on("click", "#starredByHim", function () {
       });
     },
     error: function (data) {
-      console.log("there was an error");
+      //consolele.log("there was an error");
     },
   });
 });

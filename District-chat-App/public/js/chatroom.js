@@ -20,15 +20,15 @@ function getCookie(cname) {
 $(document).ready(() => {
   $("#typing-gif").hide();
   socketio.on("success", (id) => {
-    console.log("user joined in" + id + ":" + JSON.stringify(userLoggedIn));
+    //consolele.log("user joined in" + id + ":" + JSON.stringify(userLoggedIn));
   });
 
   socketio.on("joined chat", (info) => {
-    console.log("jpined chat Room " + info.chatId + " " + info.user.Name);
+    //consolele.log("jpined chat Room " + info.chatId + " " + info.user.Name);
   });
 
   socketio.on("typing", (info) => {
-    console.log("user is typing");
+    //consolele.log("user is typing");
     $("#typer-name").text(info.user.Name);
     $("#typing-gif").show();
   });
@@ -48,7 +48,7 @@ $(document).ready(() => {
       },
       success: function (data) {
         userLoggedIn = data;
-        console.log(data);
+        //consolele.log(data);
       },
       error: function (data) {
         alert("Login Failed" + data.message);
@@ -63,7 +63,7 @@ $(document).ready(() => {
       },
       success: function (data) {
         data.forEach(function (x) {
-          console.log("chat is : " + x);
+          //consolele.log("chat is : " + x);
           $("#grouplist").append(
             `<li>
             <a href="#" class = "groups" style="text-decoration: none" id=${
@@ -120,7 +120,7 @@ $(document).ready(() => {
           </li>`
           );
         });
-        console.log(data);
+        //consolele.log(data);
       },
       error: function (data) {
         alert("Login Failed" + data.message);
@@ -141,7 +141,7 @@ function getAllMessages(chatId) {
     },
 
     success: function (data) {
-      console.log(data);
+      //consolele.log(data);
       appendmessageHtml(data);
       scrollToBottom(false);
     },
@@ -161,8 +161,8 @@ $("body").on("click", ".groups", function () {
     user: userLoggedIn,
   };
   socketio.emit("join chat", info);
-  console.log("hello");
-  console.log(selectedChatId);
+  //consolele.log("hello");
+  //consolele.log(selectedChatId);
 });
 
 $("#messageSendBut").click(() => {
@@ -180,7 +180,7 @@ $("#inputmessageId").keydown((event) => {
   }
 });
 /*$("body").on("click", "#forwardMessageId", () => {
-  console.log("clivvj");
+  //consolele.log("clivvj");
   $(".layout-wrapper").append(`<div class="modal-body">
   <h5>Popover in a modal</h5>
   <p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p>
@@ -229,7 +229,7 @@ function gettingChatData() {
       },
       success: function (data) {
         userLoggedIn = data;
-        console.log(data);
+        //consolele.log(data);
       },
       error: function (data) {
         alert("Login Failed" + data.message);
@@ -247,7 +247,7 @@ function gettingChatData() {
     success: function (data) {
       $("#grouplist").empty();
       data.forEach(function (x) {
-        console.log("chat is : " + x);
+        //consolele.log("chat is : " + x);
 
         $("#grouplist").append(
           `<li>
@@ -305,7 +305,7 @@ function gettingChatData() {
           </li>`
         );
       });
-      console.log(data);
+      //consolele.log(data);
     },
     error: function (data) {
       alert("could not get chat data Please login first!");
@@ -331,7 +331,7 @@ function sendMessage() {
         authorization: `Bearer ${sessionId}`,
       },
       success: function (message) {
-        console.log(message);
+        //consolele.log(message);
         // appendmessageHtml(message);
         addCurrentMessage(message);
         scrollToBottom(true);
@@ -369,7 +369,7 @@ function sendComplaint() {
         authorization: `Bearer ${sessionId}`,
       },
       success: function (message) {
-        console.log(message);
+        //consolele.log(message);
         // appendmessageHtml(message);
         addCurrentMessage(message);
         scrollToBottom(true);
